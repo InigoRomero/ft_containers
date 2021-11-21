@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Iterator.hpp                                       :+:      :+:    :+:   */
+/*   iterators_traits.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/21 18:43:38 by iromero-          #+#    #+#             */
-/*   Updated: 2021/11/21 18:43:42 by iromero-         ###   ########.fr       */
+/*   Created: 2021/11/21 18:57:21 by iromero-          #+#    #+#             */
+/*   Updated: 2021/11/21 19:04:45 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_HPP 
-#define ITERATOR_HPP
+
+#ifndef ITERATOR_TRAITS_HPP 
+#define ITERATOR_TRAITS_HPP
 
 #include <iostream>
 
