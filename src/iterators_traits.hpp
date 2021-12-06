@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 18:57:21 by iromero-          #+#    #+#             */
-/*   Updated: 2021/11/21 19:04:45 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/06 14:56:19 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ struct iterators_traits<const T*> {
     typedef const T&                            reference;
     typedef std::random_access_iterator_tag     iterator_category;
 };
+
+
 
 #endif
