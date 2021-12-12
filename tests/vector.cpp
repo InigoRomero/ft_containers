@@ -23,55 +23,25 @@ int		main(void)
 
 	for (unsigned long int i = 0; i < vct.size(); ++i)
 		vct[i] = (vct.size() - i) * 3;
-//	printSize(vct);
+	printSize(vct);
 
 	vct2.insert(vct2.end(), 42);
 	
 	vct2.insert(vct2.begin(), 2, 21);
-//	printSize(vct2);
+	printSize(vct2);
 
 	vct2.insert(vct2.end() - 2, 42);
-//	printSize(vct2);
+	printSize(vct2);
 
 	vct2.insert(vct2.end(), 2, 84);
-//	printSize(vct2);
+	printSize(vct2);
 
 	vct2.resize(4);
 	printSize(vct2);
-/*
+
 	vct2.insert(vct2.begin() + 2, vct.begin(), vct.end());
 	vct.clear();
 	printSize(vct2);
 
-	printSize(vct);*/
-
-	/* ORIGINAL */
-	std::cout << "ORIGINAL \n\n";
-	std::vector<int> og(10);
-	std::vector<int> vector2;
-
-	for (unsigned long int i = 0; i < og.size(); ++i)
-		og[i] = (og.size() - i) * 3;
-//	printSize(og);
-
-	vector2.insert(vector2.end(), 42);
-	
-	vector2.insert(vector2.begin(), 2, 21);
-//	printSize(vector2);
-
-	vector2.insert(vector2.end() - 2, 42);
-//	printSize(vector2);
-
-	vector2.insert(vector2.end(), 2, 84);
-//	printSize(vector2);
-
-	vector2.resize(4);
-	printSize(vector2);
-/*
-	vector2.insert(vector2.begin() + 2, og.begin(), og.end());
-	og.clear();
-	printSize(vector2);
-
-	printSize(og);*/
-	return (0);
+	printSize(vct);
 }

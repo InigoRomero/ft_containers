@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/12 18:22:12 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:38:48 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,18 @@ namespace ft {
             size_type max_size() const { return ft_allocator.max_size(); }
 
             void resize (size_type n, value_type val = value_type()) { //later
-                (void)n;
-                (void)val;
+                if (n < ft_capacity)
+                    ft_capacity = n;
+                else if(n > ft_capacity) {
+                    value_type* ptr = ft_allocator.allocate(n);
+                    for (size_type i = 0; i < ft_capacity; i++)
+                        ptr[i] = ft_buff[i];
+                    ft_allocator.deallocate(ft_buff, ft_capacity);
+                    ft_capacity = n;
+                    ft_buff = ptr;
+                    for (; ft_capacity < n; ++ft_capacity)
+                        ft_buff[ft_capacity] = val;
+                }
             }
 
             size_type capacity() const { return ft_capacity; }
@@ -181,15 +191,16 @@ namespace ft {
                 size_t size = (last - first);
                 if (size > this->max_size())
                     throw (std::length_error("vector::insert (fill)"));
-                ft_capacity = (ft_capacity + size > ft_capacity) ? ft_capacity + size : ft_capacity;
+                ft_capacity += size;
                 pointer tmp = ft_allocator.allocate(ft_capacity);
                 iterator it = begin();
                 size_t i  = 0;
                 while (it < position)
                     tmp[i++] = *it++;
+                std::cout << "i-->" << i << std::endl;
                 size += i;
                 while (i < size)
-                    tmp[i++] = *it++;
+                    tmp[i++] = *first++;
                 while (i < ft_capacity)
                     tmp[i++] = *it++;
                 ft_allocator.deallocate(ft_buff, aux);
