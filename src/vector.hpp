@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/12 18:38:48 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/12 18:48:22 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ namespace ft {
                 return iterator(ft_buff + ft_capacity);
             }
             const_iterator  end() const {
-                std::cout << ft_capacity << "\n";
                 return const_iterator(ft_buff + ft_capacity);
             }
             reverse_iterator rbegin() {
@@ -197,7 +196,6 @@ namespace ft {
                 size_t i  = 0;
                 while (it < position)
                     tmp[i++] = *it++;
-                std::cout << "i-->" << i << std::endl;
                 size += i;
                 while (i < size)
                     tmp[i++] = *first++;
