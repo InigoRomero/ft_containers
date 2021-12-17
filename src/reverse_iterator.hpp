@@ -32,7 +32,7 @@ class ReverseIterator {
 		typedef typename traits_type::pointer           	pointer;
 		typedef typename traits_type::reference         	reference;
 		//default constructor
-		ReverseIterator() { return; };
+		ReverseIterator(): current() {}
 		//initalization constructor
 		explicit ReverseIterator(iterator_type x): current(x) {}
 		ReverseIterator(const ReverseIterator& x): current(x.current) {}
@@ -69,12 +69,12 @@ class ReverseIterator {
         	return ReverseIterator(current + n);
     	}
 
-		ReverseIterator    operator+=(difference_type n) const {
+		ReverseIterator    operator+=(difference_type n) {
         	current -= n;
 			return *this;
     	}
 
-		ReverseIterator    operator-=(difference_type n) const {
+		ReverseIterator    operator-=(difference_type n) {
         	current += n;
 			return *this;
     	}

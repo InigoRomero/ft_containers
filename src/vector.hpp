@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/12 18:48:22 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:35:31 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,28 @@ namespace ft {
                                 while (i < ft_capacity)
                                     ft_buff[i++] = val;
                                 static_cast<void>(alloc);
-                            }
+                            };
             //range 
             template <class InputIterator>
                     vector (InputIterator first, InputIterator last,
+                    typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true,
                             const allocator_type& alloc = allocator_type()):
-                            ft_buff(NULL), ft_capacity(0){
+                            ft_buff(NULL), ft_capacity(0) {
                                 iterator position = begin();
                                 this->insert(position, first, last);
                                 static_cast<void>(alloc);
                             };
             //copy	
-            vector (const vector& x);
+            vector (const vector& x){
+                *this = x;
+            };
 
-            /* *** ITEATOR USE *** */
+            //destructor
+            ~vector () {
+                ft_allocator.destroy(ft_buff);
+                ft_allocator.deallocate(ft_buff, ft_capacity);
+            }
+            /* *** ITEATOR *** */
             iterator begin() {
                 return iterator(ft_buff);
             }
@@ -145,11 +153,30 @@ namespace ft {
             }
 
             /* *** MODIFIERS *** */
+
+            //push_back
+            void push_back (const value_type& val) {
+                iterator position = end();
+                this->insert(position, val);
+            }
+
+            //pop_back
+            void pop_back() {
+                ft_capacity--;
+                pointer tmp = ft_allocator.allocate(ft_capacity);
+                iterator it = begin();
+                size_t i  = 0;
+                while (i < ft_capacity)
+                    tmp[i++] = *it++;
+                ft_allocator.deallocate(ft_buff, ft_capacity);
+                ft_buff = tmp;
+            }
+
             //Insert single lady
             iterator insert (iterator position, const value_type& val) {
                 ft_capacity++;
                 if (ft_capacity > this->max_size())
-                        throw (std::length_error("vector::insert (fill)"));
+                    throw (std::length_error("vector::insert (fill)"));
                 pointer tmp = ft_allocator.allocate(ft_capacity);
                 iterator it = begin();
                 size_t i  = 0;
@@ -203,6 +230,29 @@ namespace ft {
                     tmp[i++] = *it++;
                 ft_allocator.deallocate(ft_buff, aux);
                 ft_buff = tmp;
+            };
+
+            //erase single
+            iterator erase (iterator position) {
+                iterator it = position;
+                iterator ite = end();
+                while (it + 1 != ite) {
+                    *it = *(it + 1);
+                    it++;
+                }
+                ft_capacity -= 1;
+                return position;
+            };
+
+            //erase range
+            iterator erase (iterator first, iterator last){
+                iterator ite = end();
+                ft_capacity -= (last -first);
+                iterator it = first;
+                while (last != ite) {
+                    *it++ = *last++; 
+                }
+                return first;
             };
 
             //clear all content of the vector
