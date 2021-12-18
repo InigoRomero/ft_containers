@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/17 22:35:31 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/18 16:20:39 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ namespace ft {
             }
             const_reverse_iterator rend() const {
                 return const_reverse_iterator(begin());
-            }
+    }
 
             /* *** Capacity *** */
             size_type size() const { return ft_capacity; }
