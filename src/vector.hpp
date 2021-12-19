@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/19 20:58:15 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:21:51 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,10 @@ namespace ft {
                 if (n < ft_size)
                     ft_size = n;
                 else if(n > ft_size) {
-                    value_type* tmp = ft_allocator.allocate(n);
-                    for (size_type i = 0; i < ft_size; i++)
-                        tmp[i] = ft_buff[i];
-                    ft_allocator.deallocate(ft_buff, ft_capacity);
-                    ft_size = n;
-                    ft_buff = tmp;
+                    if (n > ft_capacity) {
+                        replicate(n);
+                        ft_capacity = n;
+                    }
                     for (; ft_size < n; ++ft_size)
                         ft_buff[ft_size] = val;
                 }
@@ -165,6 +163,8 @@ namespace ft {
             bool empty() const { return (ft_size == 0); }
 
             void reserve (size_type n) {
+                if (n > this->max_size())
+                    throw (std::length_error("vector::insert (fill)"));
                 if (n > ft_capacity)
                 {
                     value_type      *tmp = ft_allocator.allocate(n);
@@ -339,14 +339,14 @@ namespace ft {
                     *it = *(it + 1);
                     it++;
                 }
-                ft_capacity -= 1;
+                ft_size -= 1;
                 return position;
             };
 
             //erase range
             iterator erase (iterator first, iterator last){
                 iterator ite = end();
-                ft_capacity -= (last -first);
+                ft_size -= (last -first);
                 iterator it = first;
                 while (last != ite) {
                     *it++ = *last++; 
@@ -354,10 +354,26 @@ namespace ft {
                 return first;
             };
 
+            //swap
+            void swap (vector& x) {
+                pointer tmp = x.ft_buff;
+                size_type sz = x.ft_size;
+                size_type capacity = x.ft_capacity;
+
+                x.ft_capacity = ft_capacity;
+                ft_capacity = capacity;
+                x.ft_size = ft_size;
+                ft_size = sz;
+                x.ft_buff = ft_buff;
+                ft_buff = tmp;
+            }
             //clear all content of the vector
             void clear() {
                 ft_allocator.destroy(ft_buff);
                 ft_size = 0;
+            }
+            allocator_type get_allocator() const {
+                return allocator_type();
             }
     };
     /* *** RELATIONAL OPERATORS *** */
