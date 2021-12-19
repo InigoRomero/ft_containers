@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/18 23:27:29 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/19 20:58:15 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "reverse_iterator.hpp"
+#include <cstdlib>
 
 template <typename iterator> class ft_iterator;
 
@@ -146,13 +147,13 @@ namespace ft {
 
             void resize (size_type n, value_type val = value_type()) {
                 if (n < ft_size)
-                    ft_capacity = n;
+                    ft_size = n;
                 else if(n > ft_size) {
                     value_type* tmp = ft_allocator.allocate(n);
                     for (size_type i = 0; i < ft_size; i++)
                         tmp[i] = ft_buff[i];
                     ft_allocator.deallocate(ft_buff, ft_capacity);
-                    ft_capacity = n;
+                    ft_size = n;
                     ft_buff = tmp;
                     for (; ft_size < n; ++ft_size)
                         ft_buff[ft_size] = val;
@@ -234,53 +235,100 @@ namespace ft {
             iterator insert (iterator position, const value_type& val) {
                 if (ft_size + 1 > this->max_size())
                     throw (std::length_error("vector::insert (fill)"));
-                if (ft_size + 1 > ft_capacity) {
+                if (ft_size + 1 > ft_capacity)
                     newCapacity();
-                    ft_size++;
-                }
+                size_t i = -1; //save in aux the valuea after the new value
+                value_type aux[ft_size];
+                while (++i < ft_size)
+                    aux[i] = ft_buff[i];
                 iterator it = begin();
+                i = 0;
                 while (it < position)
-                   *it++;
-                *it= val;
+                   ft_buff[i++] = *it++;
+                ft_buff[i] = val;
+                ft_size++;
+                while (i++ < ft_size)
+                    ft_buff[i] = aux[i - 1];
                 return it;
             }
 
             //Insert multiple FILL
             void insert (iterator position, size_type n, const value_type& val) {
+                iterator it = begin();
+                iterator ite = end();
+                
                 if (ft_size + n > this->max_size())
                     throw (std::length_error("vector::insert (fill)"));
                 if (ft_size + n > ft_capacity) {
-                    newCapacity();
-                    ft_size+= n;
+                    ft_capacity = ft_size + n;
+                    ft_capacity = (!ft_capacity) ? 1 : 2 * ft_capacity;
+                    value_type  *tmp = ft_allocator.allocate(ft_capacity);
+                    ft_size = 0;
+                    while (it < position)
+                        tmp[ft_size++] = *it++;
+                    n += ft_size;
+                    for (; ft_size < n; ft_size++)
+                        tmp[ft_size] = val;
+                    while (it < ite)
+                        tmp[ft_size++] = *it++;
+                    ft_allocator.deallocate(ft_buff, ft_capacity);
+                    ft_buff = tmp;
+                } else {
+                    size_t i = -1; //save in aux the valuea after the new value
+                    value_type aux[ft_size];
+                    while (++i < ft_size)
+                        aux[i] = ft_buff[i];
+                    iterator it = begin();
+                    i = 0;
+                    ft_size += n;
+                    while (it < position)
+                        *it++ ?  i++ : i++;
+                    n += i;
+                    for (; i < n; i++)
+                        ft_buff[i] = val;
+                    while (i++ < ft_size)
+                        ft_buff[i] = aux[i - n];
                 }
-                iterator it = begin();
-                while (it < position)
-                   *it++;
-                *it= val;
-                size_t i = 0;
-                for (; i < n; i++)
-                    ft_buff[i] = val;
             }
 
             //Insert range
-            void insert (iterator position, iterator first, iterator last) {
-                size_t aux = ft_capacity;
-                size_t size = (last - first);
-                if (size > this->max_size())
-                    throw (std::length_error("vector::insert (fill)"));
-                ft_capacity += size;
-                pointer tmp = ft_allocator.allocate(ft_capacity);
-                iterator it = begin();
-                size_t i  = 0;
-                while (it < position)
-                    tmp[i++] = *it++;
-                size += i;
-                while (i < size)
-                    tmp[i++] = *first++;
-                while (i < ft_capacity)
-                    tmp[i++] = *it++;
-                ft_allocator.deallocate(ft_buff, aux);
-                ft_buff = tmp;
+            template <class InputIterator>
+            void insert (iterator position, InputIterator first, InputIterator last,
+                    typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) {
+                        size_t n = last - first;
+                        size_type i = 0;
+                        iterator it = begin();
+                        
+                        if (ft_size + n > this->max_size())
+                            throw (std::length_error("vector::insert (fill)"));
+                        if (ft_size + n > ft_capacity) {
+                            ft_capacity += n;
+                            ft_capacity = (!ft_capacity) ? 1 : 2 * ft_capacity;
+                            value_type  *tmp = ft_allocator.allocate(ft_capacity);
+                            while (it < position)
+                                tmp[i++] = *it++;
+                            while (first != last)
+                                tmp[i++] = *first++;
+                            for (;i < ft_size + n; i++)
+                                tmp[i] = ft_buff[i - n];
+                            ft_allocator.deallocate(ft_buff, ft_capacity);
+                            ft_buff = tmp;
+                            ft_size+= n;
+                        } else {
+                            size_t i = -1; //save in aux the valuea after the new value
+                            value_type aux[ft_size];
+                            while (++i < ft_size)
+                                aux[i] = ft_buff[i];
+                            iterator it = begin();
+                            i = 0;
+                            ft_size += n;
+                            while (it < position)
+                                *it++ ?  i++ : i++;
+                            while (first != last)
+                                ft_buff[i++] = *first++;
+                            for (;i < ft_size; i++)
+                                ft_buff[i] = aux[i - n];
+                        }
             };
 
             //erase single
@@ -309,7 +357,7 @@ namespace ft {
             //clear all content of the vector
             void clear() {
                 ft_allocator.destroy(ft_buff);
-                ft_capacity = 0;
+                ft_size = 0;
             }
     };
     /* *** RELATIONAL OPERATORS *** */
