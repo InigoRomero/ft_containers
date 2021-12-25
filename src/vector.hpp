@@ -218,6 +218,28 @@ namespace ft {
             }
 
             /* *** MODIFIERS *** */
+            //assign range
+            template <class InputIterator>
+            void assign (InputIterator first, InputIterator last,
+            typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) {
+                size_type n = (last - first);
+                if (n > ft_size) {
+                    replicate(n * 2);
+                    ft_capacity = n * 2;
+                }
+                for (ft_size = 0; ft_size < n; ++ft_size)
+                    ft_buff[ft_size] = *first++;
+            }
+
+            //assign fill
+            void assign (size_type n, const value_type& val) {
+                if (n > ft_size) {
+                    replicate(n * 2);
+                    ft_capacity = n * 2;
+                }
+                for (ft_size = 0; ft_size < n; ++ft_size)
+                    ft_buff[ft_size] = val;
+            }
 
             //push_back
             void push_back (const value_type& val) {
