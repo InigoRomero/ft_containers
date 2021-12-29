@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/19 21:21:51 by iromero-         ###   ########.fr       */
+/*   Updated: 2021/12/29 13:06:31 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,34 +400,39 @@ namespace ft {
     };
     /* *** RELATIONAL OPERATORS *** */
 
-    template <class T, class Alloc>
-    inline bool operator== (const ft::vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-        return (lhs == rhs);
+    template<typename T>
+    bool operator==(vector<T> const &lhs, vector<T> const &rhs) {
+        if (lhs.size() != rhs.size())
+            return (false);
+        for (size_t i = 0; i < lhs.size(); i++)
+            if (lhs[i] != rhs[i])
+                return (false);
+        return (true);
     }
 
-    template <class T, class Alloc>
-    inline bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-        return !(lhs == rhs);
+    template<typename T>
+    bool operator!=(vector<T> const &lhs, vector<T> const &rhs) {
+        return (!(lhs == rhs));
     }
 
-    template <class T, class Alloc>
-    inline bool operator< (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-        return (lhs < rhs);
+    template<typename T>
+    bool operator<(vector<T> const &lhs, vector<T> const &rhs) {
+        return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
     }
 
-    template <class T, class Alloc>
-    inline bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-        return (lhs <= rhs);
+    template<typename T>
+    bool operator<=(vector<T> const &lhs, vector<T> const &rhs) {
+        return (!(rhs < lhs));
     }
 
-    template <class T, class Alloc>
-    inline bool operator> (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-        return (lhs > rhs);
+    template<typename T>
+    bool operator>(vector<T> const &lhs, vector<T> const &rhs) {
+        return (rhs < lhs);
     }
 
-    template <class T, class Alloc>
-    inline bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
-        return (lhs >= rhs);
+    template<typename T>
+    bool operator>=(vector<T> const &lhs, vector<T> const &rhs) {
+        return (!(lhs < rhs));
     }
 
 } 
