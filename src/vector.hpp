@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/29 13:06:31 by macbook          ###   ########.fr       */
+/*   Updated: 2022/02/06 16:27:12 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "reverse_iterator.hpp"
+#include "lexicographical_compare.hpp"
 #include <cstdlib>
 
 template <typename iterator> class ft_iterator;
