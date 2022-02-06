@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2022/02/06 16:27:12 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/02/06 17:52:44 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,12 @@ namespace ft {
                     vector (InputIterator first, InputIterator last,
                     typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true,
                             const allocator_type& alloc = allocator_type()):
-                            ft_buff(NULL), ft_capacity(last - first), ft_size(0) {
-                                ft_buff = ft_allocator.allocate(ft_capacity);
-                                while (first < last)
-                                    ft_buff[ft_size++] = *first++;
+                            ft_buff(NULL), ft_capacity(0), ft_size(0) {
+                                for (InputIterator it = first; it != last; it++)
+				                    this->ft_capacity++;
+                                ft_buff = ft_allocator.allocate(ft_capacity * 2);
+                                for (InputIterator it = first; it != last; it++)
+                                    ft_buff[ft_size++] = *it;
                                 static_cast<void>(alloc);
                             };
             //copy	
@@ -223,7 +225,9 @@ namespace ft {
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last,
             typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) {
-                size_type n = (last - first);
+                size_type n = 0;
+                for (InputIterator it = first; it != last; it++)
+                    n++;
                 if (n > ft_size) {
                     replicate(n * 2);
                     ft_capacity = n * 2;
@@ -318,7 +322,9 @@ namespace ft {
             template <class InputIterator>
             void insert (iterator position, InputIterator first, InputIterator last,
                     typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) {
-                        size_t n = last - first;
+                        size_type n = 0;
+                        for (InputIterator it = first; it != last; it++)
+                            n++;
                         size_type i = 0;
                         iterator it = begin();
                         
