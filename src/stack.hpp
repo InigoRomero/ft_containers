@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:41:31 by macbook           #+#    #+#             */
-/*   Updated: 2022/02/06 19:01:54 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/02/12 13:13:14 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
 			typedef Container 		container_type;
 			typedef size_t			size_type;
 
-			explicit stack (const container_type& ctnr = container_type()) : c(ctnr) {std::cout << "hi2\n";}
+			explicit stack (const container_type& ctnr = container_type()) : c(ctnr) {}
 
 			bool empty()const{ 
                 return ( c.empty() ); 

@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2022/02/06 17:52:44 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/02/12 19:31:55 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ namespace ft {
                             const allocator_type& alloc = allocator_type()):
                             ft_buff(NULL), ft_capacity(n), ft_size(0){
                                 ft_buff = ft_allocator.allocate(ft_capacity);
-                                while (ft_size < ft_capacity)
+                                while (ft_size < ft_capacity) {
                                     ft_buff[ft_size++] = val;
+                                    std::cout << "val===" << ft_buff[ft_size - 1] << std::endl;
+                                }
                                 static_cast<void>(alloc);
                             };
             //range 
@@ -117,6 +119,7 @@ namespace ft {
                 }
                 return *this;
             }
+
             /* *** ITEATOR *** */
             iterator begin() {
                 return iterator(ft_buff);
@@ -463,10 +466,14 @@ private:
 public:
 
         ft_iterator(): ft_current() {}
+        
         explicit ft_iterator(iterator_type x): ft_current(x) {}
+
         ft_iterator(const ft_iterator& x): ft_current(x.ft_current) {}
+
         template <typename iter>
         ft_iterator(const ft_iterator<iter>& i): ft_current(i.base()) {}
+
         const iterator_type&    base() const {
             return ft_current;
         }
@@ -474,37 +481,52 @@ public:
         reference   operator*() const { 
             return *ft_current;
         }
+
         pointer     operator->() const {
-            return ft_current;
+             return this->ft_current;
         }
+
+        ft_iterator &operator=(ft_iterator const &other) {
+            this->ft_current = other.ft_current;
+            return (*this);
+	    }
+
         ft_iterator&  operator++() {
             ++ft_current;
             return *this;
         }
+
         ft_iterator    operator++(int) {
             return ft_iterator(ft_current++);
         }
+
         ft_iterator&  operator--() {
             --ft_current;
             return *this;
         }
+
         ft_iterator   operator--(int) {
             return ft_iterator(ft_current--);
         }
+
         reference    operator[](difference_type n) const {
             return ft_current[n];
         }
+
         ft_iterator&    operator+=(difference_type n) {
             ft_current += n;
             return *this;
         }
+
         ft_iterator     operator+(difference_type n) {
             return ft_iterator(ft_current + n);
         }
+
         ft_iterator&    operator-=(difference_type n) {
             ft_current -= n;
             return *this;
         }
+        
         ft_iterator   operator-(difference_type n) const {
             return ft_iterator(ft_current - n);
         } 
