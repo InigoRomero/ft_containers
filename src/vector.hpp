@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2022/02/19 18:10:16 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/02/19 18:22:49 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ namespace ft {
             /* *** CONSTRUCTORS *** */
             //  default
             explicit vector (const allocator_type& alloc = allocator_type()): 
-            ft_buff(NULL), ft_capacity(0), ft_size(0) { ft_buff = ft_allocator.allocate(2);static_cast<void>(alloc); }
+            ft_buff(NULL), ft_capacity(0), ft_size(0) { ft_buff = ft_allocator.allocate(2); static_cast<void>(alloc); }
             //fill 
             explicit vector (size_type n, const value_type& val = value_type(),
                             const allocator_type& alloc = allocator_type()):
@@ -151,12 +151,13 @@ namespace ft {
             size_type max_size() const { return ft_allocator.max_size(); }
 
             void resize (size_type n, value_type val = value_type()) {
+                const size_t size = sizeof(val);
                 if (n < ft_size)
                     ft_size = n;
                 else if(n > ft_size) {
-                    if (n > ft_capacity) {
-                        replicate(n);
-                        ft_capacity = n;
+                    if (n * size > ft_capacity) {
+                        replicate(n * size);
+                        ft_capacity = n * size;
                     }
                     for (; ft_size < n; ++ft_size)
                         ft_buff[ft_size] = val;
@@ -227,11 +228,12 @@ namespace ft {
             template <class InputIterator>
             void assign (InputIterator first, InputIterator last,
             typename enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) {
+                const size_t size = sizeof(*first);
                 size_type n = 0;
                 for (InputIterator it = first; it != last; it++)
                     n++;
-                if (n > ft_size) {
-                    replicate(n * 2);
+                if (n * size > ft_capacity) {
+                    replicate(n * size * 2);
                     ft_capacity = n * 2;
                 }
                 for (ft_size = 0; ft_size < n; ++ft_size)
@@ -240,9 +242,11 @@ namespace ft {
 
             //assign fill
             void assign (size_type n, const value_type& val) {
+                const size_t size = sizeof(val);
+
                 if (n > ft_size) {
-                    replicate(n * 2);
-                    ft_capacity = n * 2;
+                    replicate(n * size * 2);
+                    ft_capacity = n * size * 2;
                 }
                 for (ft_size = 0; ft_size < n; ++ft_size)
                     ft_buff[ft_size] = val;
