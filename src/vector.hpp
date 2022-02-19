@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2022/02/12 19:31:55 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/02/19 13:03:50 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,9 @@ namespace ft {
             explicit vector (size_type n, const value_type& val = value_type(),
                             const allocator_type& alloc = allocator_type()):
                             ft_buff(NULL), ft_capacity(n), ft_size(0){
-                                ft_buff = ft_allocator.allocate(ft_capacity);
-                                while (ft_size < ft_capacity) {
+                                ft_buff = ft_allocator.allocate(ft_capacity * sizeof(val));
+                                while (ft_size < ft_capacity)
                                     ft_buff[ft_size++] = val;
-                                    std::cout << "val===" << ft_buff[ft_size - 1] << std::endl;
-                                }
                                 static_cast<void>(alloc);
                             };
             //range 
