@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2022/02/19 13:03:50 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/02/19 18:10:16 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ namespace ft {
                 ft_buff = tmp;
             }
 
-            void    newCapacity(void)
+            void    newCapacity(const size_t size)
             {
-                replicate((!ft_capacity) ? 1 : 2 * ft_capacity);
-                ft_capacity = (!ft_capacity) ? 1 : 2 * ft_capacity;
+                
+                replicate((!ft_capacity) ? 1 : 2 * ft_capacity * size);
+                ft_capacity = (!ft_capacity) ? 1 : 2 * ft_capacity * size;
             }
 
         public:
@@ -68,7 +69,7 @@ namespace ft {
             /* *** CONSTRUCTORS *** */
             //  default
             explicit vector (const allocator_type& alloc = allocator_type()): 
-            ft_buff(NULL), ft_capacity(0), ft_size(0) { static_cast<void>(alloc); }
+            ft_buff(NULL), ft_capacity(0), ft_size(0) { ft_buff = ft_allocator.allocate(2);static_cast<void>(alloc); }
             //fill 
             explicit vector (size_type n, const value_type& val = value_type(),
                             const allocator_type& alloc = allocator_type()):
@@ -92,9 +93,9 @@ namespace ft {
                                 static_cast<void>(alloc);
                             };
             //copy	
-            vector (const vector& x): ft_capacity(x.size()), ft_size(-1) {
+            vector (const vector& x): ft_capacity(x.capacity()), ft_size(-1) {
                 ft_buff = ft_allocator.allocate(ft_capacity);
-                while (++ft_size < ft_capacity)
+                while (++ft_size < x.size())
                     ft_buff[ft_size] = x[ft_size];
             };
 
@@ -249,8 +250,9 @@ namespace ft {
 
             //push_back
             void push_back (const value_type& val) {
-                if (ft_size + 1 > ft_capacity)
-                    newCapacity();
+                const size_t size = sizeof(val);
+                if (ft_size * size + 1 > ft_capacity)
+                    newCapacity(size);
                 ft_buff[ft_size++] = val;
             }
 
@@ -261,10 +263,11 @@ namespace ft {
 
             //Insert single lady
             iterator insert (iterator position, const value_type& val) {
+                const size_t size = sizeof(val);
                 if (ft_size + 1 > this->max_size())
                     throw (std::length_error("vector::insert (fill)"));
                 if (ft_size + 1 > ft_capacity)
-                    newCapacity();
+                    newCapacity(size);
                 size_t i = -1; //save in aux the valuea after the new value
                 value_type aux[ft_size];
                 while (++i < ft_size)
