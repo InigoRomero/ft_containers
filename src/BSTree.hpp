@@ -84,12 +84,10 @@ namespace ft
 			if (tmp->left)
 				return (tmp->left);
 			BSTNode* pa = tmp->parent;
-			//std::cout << pa->value.first << std::endl;
 			while (pa && tmp == pa->left){
                 tmp = pa;
                 pa = tmp->parent;
             }
-			//std::cout << pa->value.first << std::endl;
             return pa;
 		}
 	};

@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:40:30 by iromero-          #+#    #+#             */
-/*   Updated: 2022/03/12 17:52:34 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/03/13 14:22:16 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,65 +41,65 @@ namespace ft {
 
             map_iterator(const node_pointer &p): ft_node(p), ft_val(p->value) {}
 
-         /*   template <typename iter>
-            map_iterator(const map_iterator<iter>& i): ft_current(i.base()) {}
+            template <typename iter>
+            map_iterator(const map_iterator<iter>& p): ft_node(p.) {}
 
             const iterator_type&    base() const {
-                return ft_current;
+                return ft_node;
             }
 
             reference   operator*() const { 
-                return *ft_current;
+                return *ft_node;
             }
 
             pointer     operator->() const {
-                return this->ft_current;
+                return this->ft_node;
             }
 
             map_iterator &operator=(map_iterator const &other) {
-                this->ft_current = other.ft_current;
+                this->ft_node = other.ft_node;
                 return (*this);
             }
 
             map_iterator&  operator++() {
-                ++ft_current;
+                ++ft_node;
                 return *this;
             }
 
             map_iterator    operator++(int) {
-                return map_iterator(ft_current++);
+                return map_iterator(ft_node++);
             }
 
             map_iterator&  operator--() {
-                --ft_current;
+                --ft_node;
                 return *this;
             }
 
             map_iterator   operator--(int) {
-                return map_iterator(ft_current--);
+                return map_iterator(ft_node--);
             }
 
             reference    operator[](difference_type n) const {
-                return ft_current[n];
+                return ft_node[n];
             }
 
             map_iterator&    operator+=(difference_type n) {
-                ft_current += n;
+                ft_node += n;
                 return *this;
             }
 
             map_iterator     operator+(difference_type n) {
-                return map_iterator(ft_current + n);
+                return map_iterator(ft_node + n);
             }
 
             map_iterator&    operator-=(difference_type n) {
-                ft_current -= n;
+                ft_node -= n;
                 return *this;
             }
             
             map_iterator   operator-(difference_type n) const {
-                return map_iterator(ft_current - n);
-            } */
+                return map_iterator(ft_node - n);
+            } 
     };
 /*
     template <typename iterator1, typename iterator2>
