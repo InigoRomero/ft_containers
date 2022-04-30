@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/03/12 18:02:58 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/04/30 19:27:43 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #include "reverse_iterator.hpp"
 #include "pair.hpp"
 #include "BSTree.hpp"
-//#include "map_iterator.hpp"
-
-//template <typename iterator> class map_iterator;
+#include "map_iterator.hpp"
 
 namespace ft {
 template < class Key,                                               // map::key_type
@@ -39,10 +37,10 @@ template < class Key,                                               // map::key_
 			typedef typename allocator_type::const_reference							const_reference;
 			typedef typename allocator_type::pointer									pointer;
 			typedef typename allocator_type::const_pointer								const_pointer;
-		//	typedef ft::map_iterator<value_type, pointer, reference>					iterator;
-		//	typedef ft::map_iterator<value_type, const_pointer, const_reference>		const_iterator;
-        //  typedef ReverseIterator<iterator>											reverse_iterator;
-        //  typedef ReverseIterator<const_iterator>										const_reverse_iterator;
+			typedef ft::map_iterator<value_type, pointer, reference>					iterator;
+			typedef ft::map_iterator<value_type, const_pointer, const_reference>		const_iterator;
+        	typedef ReverseIterator<iterator>											reverse_iterator;
+        	typedef ReverseIterator<const_iterator>										const_reverse_iterator;
 			typedef std::ptrdiff_t														difference_type;
 			typedef size_t																size_type;
 			typedef																		BSTNode<value_type> map_node;
@@ -56,15 +54,15 @@ template < class Key,                                               // map::key_
 			key_compare ft_compare;
 			alloc_node	ft_allocator;
 
-            void init_tree()
+            void init_tree(size_t toAllocate)
 			{
-				ft_root = ft_allocator.allocate(2);
+				ft_root = ft_allocator.allocate(toAllocate);
 				ft_allocator.construct(ft_root, value_type());
 
-				ft_begin = ft_allocator.allocate(2);
+				ft_begin = ft_allocator.allocate(toAllocate);
 				ft_allocator.construct(ft_begin, value_type());
 
-				ft_end = ft_allocator.allocate(2);
+				ft_end = ft_allocator.allocate(toAllocate);
 				ft_allocator.construct(ft_end, value_type());
 
 				ft_begin->parent = ft_root;
@@ -79,9 +77,56 @@ template < class Key,                                               // map::key_
             //  default
             explicit map (const key_compare& comp = key_compare(),const allocator_type& alloc = allocator_type()):
             ft_root(), ft_end(), ft_size(0), ft_compare(comp), ft_allocator(alloc) {
-                init_tree();
+                init_tree(2);
             }
-    };
+
+			//range
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last,
+			const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
+			ft_root(), ft_end(), ft_size(0), ft_compare(comp), ft_allocator(alloc) {
+				for (InputIterator it = first; it != last; it++)
+					ft_size++;
+				std::cout << "how much -->" << ft_size << std::endl;
+				init_tree(ft_size);
+				
+			}
+
+			/* *** INSERT *** */
+			//single
+			pair<iterator,bool> insert (const value_type& val) {
+				//check if areldy exist
+				iterator it = find(val.first);
+				if (it != this->end())
+					return (ft::make_pair(it, false));
+				ft_root = ft_root->findMax;
+				ft_root->parent->value = val;
+				ft_size++;
+				return ft::make_pair(ft_root->parent, true);
+
+			}
+
+			/* *** OPERATORS *** */
+
+			//find
+			iterator find (const key_type& k) {
+				map_node *node = ft_root;
+
+				while (node && node != ft_end) {
+					if (ft_compare(node->value.first, k))
+						return iterator(node);
+					node = node->left;
+				}
+
+				return iterator(ft_end);
+			}
+
+			/* *** ITERATORS *** */
+
+			iterator begin()	{ return iterator(ft_begin); }
+
+			iterator end()	 	{ return iterator(ft_end); }
+	};
 }
 
 #endif

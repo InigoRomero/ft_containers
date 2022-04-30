@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:40:30 by iromero-          #+#    #+#             */
-/*   Updated: 2022/03/13 14:22:16 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/04/30 15:36:14 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 
 #include "BSTree.hpp"
 #include "iterators_traits.hpp"
+    
 namespace ft {
-    template< typename Iter, typename Pointer, typename Reference >
-    class map_iterator {
+template< typename Iter, typename Pointer, typename Reference>
+class map_iterator {
 
     public:
-
-            typedef iterator                                                        iterator_type;
-            typedef typename iterators_traits<iterator_type>::difference_type       difference_type;
-            typedef typename iterators_traits<iterator_type>::value_type            value_type;
-            typedef typename iterators_traits<iterator_type>::pointer               pointer;
-            typedef typename iterators_traits<iterator_type>::reference             reference;
-            typedef typename iterators_traits<iterator_type>::iterator_category     iterator_category;
-            typedef Node*                                                           node_pointer;
+            typedef Iter                                                                iterator_type;
+            typedef typename ft::iterators_traits<iterator_type>::difference_type       difference_type;
+            typedef typename ft::iterators_traits<iterator_type>::value_type            value_type;
+            typedef typename ft::iterators_traits<iterator_type>::pointer               pointer;
+            typedef typename ft::iterators_traits<iterator_type>::reference             reference;
+            typedef typename ft::iterators_traits<iterator_type>::iterator_category     iterator_category;
+            typedef          BSTNode<value_type>                                        node_pointer;
 
     private:
             node_pointer                                                            ft_node;
@@ -41,8 +41,8 @@ namespace ft {
 
             map_iterator(const node_pointer &p): ft_node(p), ft_val(p->value) {}
 
-            template <typename iter>
-            map_iterator(const map_iterator<iter>& p): ft_node(p.) {}
+            //template <typename iter>
+            //map_iterator(const map_iterator<iter>& p): ft_node(p) {}
 
             const iterator_type&    base() const {
                 return ft_node;

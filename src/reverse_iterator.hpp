@@ -19,7 +19,7 @@ template<typename iterator>
 class ReverseIterator {
 	protected:
 		iterator 										current;
-		typedef iterators_traits<iterator>              traits_type;
+		typedef ft::iterators_traits<iterator>              traits_type;
 		
 	public:
 		

@@ -2,7 +2,8 @@
 #include "../src/map.hpp"
 
 #include "common.hpp"
-
+#include <utility>      // std::pair
+#include <iostream>     // std::cout
 /*
 single element (1)
 	iterator insert (iterator position, const value_type& val);
@@ -18,7 +19,11 @@ range (3)
 
 int		main(void)
 {
-	ft::map<int, int> mymap;
-	
+	ft::map<char,int> first;
+
+	first.insert(ft::make_pair('a',20));
+
+  //	ft::map<char,int> second (first.begin(),first.end());
+
 	return (0);
 }

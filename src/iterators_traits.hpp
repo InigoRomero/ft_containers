@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 18:57:21 by iromero-          #+#    #+#             */
-/*   Updated: 2021/12/06 14:56:19 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/04/30 19:06:52 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #ifndef ITERATOR_TRAITS_HPP 
 #define ITERATOR_TRAITS_HPP
 
-#include <iostream>
-
+#include <iterator>
+namespace ft {
 template<typename Iterator>
 struct iterators_traits {
     typedef typename Iterator::difference_type      difference_type;
@@ -43,6 +43,7 @@ struct iterators_traits<const T*> {
     typedef std::random_access_iterator_tag     iterator_category;
 };
 
+}
 
 
 #endif

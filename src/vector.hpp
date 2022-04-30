@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:02:46 by iromero-          #+#    #+#             */
-/*   Updated: 2022/02/19 18:22:49 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/04/30 14:16:54 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,11 +458,11 @@ class ft_iterator {
 public:
 
         typedef iterator                                                        iterator_type;
-        typedef typename iterators_traits<iterator_type>::difference_type       difference_type;
-        typedef typename iterators_traits<iterator_type>::value_type            value_type;
-        typedef typename iterators_traits<iterator_type>::pointer               pointer;
-        typedef typename iterators_traits<iterator_type>::reference             reference;
-        typedef typename iterators_traits<iterator_type>::iterator_category     iterator_category;
+        typedef typename ft::iterators_traits<iterator_type>::difference_type       difference_type;
+        typedef typename ft::iterators_traits<iterator_type>::value_type            value_type;
+        typedef typename ft::iterators_traits<iterator_type>::pointer               pointer;
+        typedef typename ft::iterators_traits<iterator_type>::reference             reference;
+        typedef typename ft::iterators_traits<iterator_type>::iterator_category     iterator_category;
 
 private:
 
