@@ -69,7 +69,7 @@ namespace ft
 		{
 			BSTNode* tmp = this;
 			if (tmp->right)
-				return (tmp->right);
+				return (findMin(tmp->right));
 			BSTNode* pa = tmp->parent;
 			while (pa != NULL && pa->left != tmp){
                 tmp = pa;

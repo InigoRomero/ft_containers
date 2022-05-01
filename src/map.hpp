@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/05/01 15:53:11 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/05/01 19:22:36 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "reverse_iterator.hpp"
 #include "bidirectionnal_iterator.hpp"
+#include "BSTree.hpp"
 #include <iostream>
 
 namespace ft {
@@ -56,18 +57,32 @@ template < class Key,                                               // map::key_
             void init_tree(size_t toAllocate)
 			{
 				ft_root = ft_allocator.allocate(toAllocate);
-				ft_allocator.construct(ft_root, value_type());
+				ft_allocator.construct(ft_root, map_node());
 
 				ft_begin = ft_allocator.allocate(toAllocate);
-				ft_allocator.construct(ft_begin, value_type());
+				ft_allocator.construct(ft_begin, map_node());
 
 				ft_end = ft_allocator.allocate(toAllocate);
-				ft_allocator.construct(ft_end, value_type());
+				ft_allocator.construct(ft_end, map_node());
 
 				ft_begin->parent = ft_root;
 				ft_end->parent = ft_root;
 				ft_root->left = ft_begin;
 				ft_root->right = ft_end;
+			}
+
+			int retHeight(map_node *node)
+			{
+				if (node != NULL && node != ft_begin && node != ft_end)
+					return (node->height);
+				return (-1);
+			}
+
+			void setHeight(map_node *node)
+			{
+				int left = retHeight(node->left);
+				int right = retHeight(node->right);
+				node->height = std::max(left, right) + 1;
 			}
 
         public:
@@ -76,7 +91,7 @@ template < class Key,                                               // map::key_
             //  default
             explicit map (const key_compare& comp = key_compare(),const allocator_type& alloc = allocator_type()):
             ft_root(), ft_end(), ft_size(0), ft_compare(comp), ft_allocator(alloc) {
-                init_tree(2);
+                init_tree(1);
             }
 
 			//range
@@ -91,20 +106,75 @@ template < class Key,                                               // map::key_
 				
 			}
 
+			~map()
+			{
+				ft_allocator.destroy(ft_end);
+				ft_allocator.deallocate(ft_end, 1);
+				ft_allocator.destroy(ft_begin);
+				ft_allocator.deallocate(ft_begin, 1);
+			}
+
 			/* *** INSERT *** */
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
+				if (!ft_size)
+				{
+					ft_allocator.construct(ft_root, map_node(val));
+					ft_root->left = ft_begin;
+					ft_root->right = ft_end;
+					ft_end->parent = ft_root;
+					ft_begin->parent = ft_root;
+					ft_begin = ft_root;
+					ft_size++;
+
+					return (ft::make_pair(iterator(ft_root), true));
+				}
+				if (ft_size < 3) {
+					map_node *new_node = ft_allocator.allocate(1);
+					ft_allocator.construct(new_node, map_node(val));
+					new_node->parent = ft_root->parent;
+					if (ft_size == 1) {
+						new_node->right = ft_root->right;
+						if (new_node->right)
+							new_node->right->parent = new_node;
+						new_node->left = NULL;
+						ft_root->right = new_node;
+					} else {
+						new_node->left = ft_root->left;
+						if (new_node->left)
+							new_node->left->parent = new_node;
+						new_node->right = NULL;
+						ft_root->left = new_node;
+					}
+					this->setHeight(new_node);
+					ft_size++;
+					ft_end->parent = ft_root;
+					ft_end = new_node;
+				
+					return (ft::make_pair(iterator(new_node), true));
+				}
+/*
+				if (ft_size < 3) {
+					map_node *new_node = ft_allocator.allocate(1);
+					ft_allocator.construct(new_node, map_node(val));
+					new_node->parent = ft_root->parent;
+					new_node->right = ft_end;
+					new_node->left = ft_root->left;
+
+					this->setHeight(new_node);
+					
+					ft_root->right = new_node;
+					ft_root->left = ft_root->prev();
+					ft_size++;
+					return (ft::make_pair(iterator(ft_root), true));
+				}
+				ft_size++;*/
+				return (ft::make_pair(iterator(ft_root), true));
 				//check if areldy exist
-				iterator it = find(val.first);
+		/*		iterator it = find(val.first);
 				if (it != this->end())
 					return (ft::make_pair(it, false));
-				ft_root = ft_root->findMax(ft_root);
-				map_node *new_node = ft_allocator.allocate(1);
-				ft_allocator.construct(new_node, map_node(val));
-				new_node->parent = ft_root;
-				ft_size++;
-				return ft::make_pair(ft_root->parent, true);
-
+				std::cout << "hi3?|\n";*/
 			}
 
 			/* *** OPERATORS *** */
@@ -139,6 +209,8 @@ template < class Key,                                               // map::key_
 			iterator begin()	{ return iterator(ft_begin); }
 
 			iterator end()	 	{ return iterator(ft_end); }
+
+			size_type max_size() const { return (ft_allocator.max_size()); }
 	};
 }
 

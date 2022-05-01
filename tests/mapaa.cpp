@@ -21,12 +21,17 @@ int		main(void)
 {
 	ft::map<char,int> first;
 
-	first.insert(ft::make_pair('a',20));
+	first.insert(ft::make_pair('a',10));
+	first.insert(ft::make_pair('b',20));
+	first.insert(ft::make_pair('c',30));
+	first.insert(ft::make_pair('d',40));
+//	first.insert(ft::make_pair('e',50));
 
+		std::cout << "end = " << first.end()->second << "\n";
 	for(ft::map<char,int>::const_iterator it = first.begin();
     it != first.end(); ++it)
 	{
-		std::cout << it->first << " " << it->second << "\n";
+		std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 	}
   //	ft::map<char,int> second (first.begin(),first.end());
 

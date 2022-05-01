@@ -75,18 +75,12 @@ namespace ft
 
 			bidirectionnal_iterator &operator++()
 			{
-				//std::cout << "test 10" << std::endl;
-				//std::cout << "ptr = " << _ptr << std::endl;
-				//std::cout << "ptr->next = " << _ptr->next() << std::endl;
 				_ptr = _ptr->next();
 				return (*this);
 			}
 
 			bidirectionnal_iterator operator++(int)
 			{
-				//std::cout << "test 10" << std::endl;
-				//std::cout << "ptr = " << _ptr << std::endl;
-				//std::cout << "ptr->next = " << _ptr->next() << std::endl;
 				bidirectionnal_iterator tmp(*this);
 				_ptr = _ptr->next();
 				return (tmp);
