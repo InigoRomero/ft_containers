@@ -23,6 +23,11 @@ int		main(void)
 
 	first.insert(ft::make_pair('a',20));
 
+	for(ft::map<char,int>::const_iterator it = first.begin();
+    it != first.end(); ++it)
+	{
+		std::cout << it->first << " " << it->second << "\n";
+	}
   //	ft::map<char,int> second (first.begin(),first.end());
 
 	return (0);

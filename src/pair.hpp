@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:39:36 by iromero-          #+#    #+#             */
-/*   Updated: 2022/04/30 19:31:10 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/05/01 15:34:36 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ namespace ft {
 	**	make_pair function template
 	*/
 
-	template <class T1, class T2>
-	pair<T1, T2> make_pair(T1 x, T2 y) { return (pair<T1, T2>(x, y)); }
+    template <class T1,class T2>
+    pair<T1,T2> make_pair (T1 x, T2 y) {
+        return ( pair<T1,T2>(x,y) );
+    }
 
 }
 

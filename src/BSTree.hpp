@@ -1,7 +1,7 @@
 #ifndef BSTNODE_HPP
 #define BSTNODE_HPP
 
-#include <iostream>
+#include "pair.hpp"
 
 namespace ft
 {
@@ -14,7 +14,7 @@ namespace ft
 		Pair value;
 		int height;
 
-		BSTNode(): parent(NULL), left(NULL), right(NULL), value(NULL), height(0)
+		BSTNode(): parent(NULL), left(NULL), right(NULL), value(), height(0)
 		{
 
 		}
@@ -24,9 +24,9 @@ namespace ft
 
 		}
 
-		BSTNode(const BSTNode &x)
+		BSTNode(const BSTNode &x): parent(x.parent), left(x.left), right(x.right), value(x.value), height(x.height)
 		{
-			*this = x;
+
 		}
 
 		~BSTNode()
@@ -39,10 +39,10 @@ namespace ft
 			if (this != &x)
 			{
 				height = x.height;
-				value = x.value;
-				left = x.left;
-				right = x.right;
-				parent= x.parent;
+				left   = x.left;
+				right  = x.right;
+				parent = x.parent;
+				value  = x.value;
 			}
 			return (*this);
 		}

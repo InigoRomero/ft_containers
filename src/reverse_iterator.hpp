@@ -14,7 +14,8 @@
 #define ReverseIterator_HPP
 
 #include "iterators_traits.hpp"
-
+namespace ft
+{
 template<typename iterator>
 class ReverseIterator {
 	protected:
@@ -163,5 +164,5 @@ template<typename iterator>
 inline ReverseIterator<iterator> operator+(typename ReverseIterator<iterator>::difference_type n, const ReverseIterator<iterator>& x) {
     return ReverseIterator<iterator>(x.base() - n);
 }
-
+}
 #endif
