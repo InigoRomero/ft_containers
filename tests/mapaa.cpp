@@ -1,9 +1,8 @@
 
 #include "../src/map.hpp"
-
-#include "common.hpp"
-#include <utility>      // std::pair
-#include <iostream>     // std::cout
+#include <map>
+#include <utility>      // ft::pair
+#include <iostream>     // ft::cout
 /*
 single element (1)
 	iterator insert (iterator position, const value_type& val);
@@ -22,18 +21,19 @@ int		main(void)
 	ft::map<char,int> first;
 
 	first.insert(ft::make_pair('a',10));
-	first.insert(ft::make_pair('b',20));
-	first.insert(ft::make_pair('c',30));
-	first.insert(ft::make_pair('d',40));
+//	first.insert(ft::make_pair('d',40));
+//	first.insert(ft::make_pair('b',20));
+//	first.insert(ft::make_pair('c',30));
 //	first.insert(ft::make_pair('e',50));
-
-		std::cout << "end = " << first.end()->second << "\n";
-	for(ft::map<char,int>::const_iterator it = first.begin();
+	ft::map<char,int>::const_iterator it = first.begin();
+	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+//	ft::cout << "end = " << first[0] << "\n";
+/*	for(ft::map<char,int>::const_iterator it = first.begin();
     it != first.end(); ++it)
 	{
-		std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+		ft::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 	}
   //	ft::map<char,int> second (first.begin(),first.end());
-
+*/
 	return (0);
 }

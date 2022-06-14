@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:39:36 by iromero-          #+#    #+#             */
-/*   Updated: 2022/05/01 15:34:36 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/05/07 19:36:50 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ namespace ft {
 		operator const pair<const T1, T2>() const { return (pair<const T1, T2>(first, second)); }
 
 		pair& operator=(const pair& pr) { first = pr.first; second = pr.second; return *this; }
+		pair& operator=(pair& pr) { first = pr.first; second = pr.second; return *this; }
 
 		friend bool operator==(const pair& lhs, const pair& rhs) { return lhs.first == rhs.first && lhs.second == rhs.second; }
 		friend bool operator!=(const pair& lhs, const pair& rhs) { return !(lhs == rhs); }

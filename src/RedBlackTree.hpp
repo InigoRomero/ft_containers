@@ -1,0 +1,435 @@
+#ifndef REDBLACKTREE_HPP
+#define REDBLACKTREE_HPP
+
+#include "pair.hpp"
+#include "BSTNode.hpp"
+#include <iostream>
+using namespace std;
+
+namespace ft
+{
+  template < class Key,                                               // map::key_type
+           class T                                                 // map::mapped_type
+           > 
+  class RedBlackTree {
+    private:
+          typedef Key				 														  key_type;
+          typedef T 																		  mapped_type;
+          typedef ft::pair<const key_type,mapped_type> 		value_type;
+          typedef BSTNode<value_type>                                   *BSTNodePtr;
+
+    public:
+      BSTNodePtr _node;
+      BSTNodePtr TNULL;
+
+      void initializeNULLBSTNode(BSTNodePtr node, BSTNodePtr parent) {
+        node->parent = parent;
+        node->left = nullptr;
+        node->right = nullptr;
+        node->color = 0;
+      }
+
+      // Preorder
+      void preOrderHelper(BSTNodePtr node) {
+        if (node != TNULL) {
+          cout << node->value << " ";
+          preOrderHelper(node->left);
+          preOrderHelper(node->right);
+        }
+      }
+
+      // Inorder
+      void inOrderHelper(BSTNodePtr node) {
+        if (node != TNULL) {
+          inOrderHelper(node->left);
+          cout << node->value << " ";
+          inOrderHelper(node->right);
+        }
+      }
+
+      // Post order
+      void postOrderHelper(BSTNodePtr node) {
+        if (node != TNULL) {
+          postOrderHelper(node->left);
+          postOrderHelper(node->right);
+          cout << node->value << " ";
+        }
+      }
+
+      BSTNodePtr searchTreeHelper(BSTNodePtr node, int key) {
+        if (node == TNULL || key == node->value) {
+          return node;
+        }
+
+        if (key < node->value) {
+          return searchTreeHelper(node->left, key);
+        }
+        return searchTreeHelper(node->right, key);
+      }
+
+      // For balancing the tree after deletion
+      void deleteFix(BSTNodePtr x) {
+        BSTNodePtr s;
+        while (x != _node && x->color == 0) {
+          if (x == x->parent->left) {
+            s = x->parent->right;
+            if (s->color == 1) {
+              s->color = 0;
+              x->parent->color = 1;
+              leftRotate(x->parent);
+              s = x->parent->right;
+            }
+
+            if (s->left->color == 0 && s->right->color == 0) {
+              s->color = 1;
+              x = x->parent;
+            } else {
+              if (s->right->color == 0) {
+                s->left->color = 0;
+                s->color = 1;
+                rightRotate(s);
+                s = x->parent->right;
+              }
+
+              s->color = x->parent->color;
+              x->parent->color = 0;
+              s->right->color = 0;
+              leftRotate(x->parent);
+              x = _node;
+            }
+          } else {
+            s = x->parent->left;
+            if (s->color == 1) {
+              s->color = 0;
+              x->parent->color = 1;
+              rightRotate(x->parent);
+              s = x->parent->left;
+            }
+
+            if (s->right->color == 0 && s->right->color == 0) {
+              s->color = 1;
+              x = x->parent;
+            } else {
+              if (s->left->color == 0) {
+                s->right->color = 0;
+                s->color = 1;
+                leftRotate(s);
+                s = x->parent->left;
+              }
+
+              s->color = x->parent->color;
+              x->parent->color = 0;
+              s->left->color = 0;
+              rightRotate(x->parent);
+              x = _node;
+            }
+          }
+        }
+        x->color = 0;
+      }
+
+      void rbTransplant(BSTNodePtr u, BSTNodePtr v) {
+        if (u->parent == nullptr) {
+          _node = v;
+        } else if (u == u->parent->left) {
+          u->parent->left = v;
+        } else {
+          u->parent->right = v;
+        }
+        v->parent = u->parent;
+      }
+
+      void deleteBSTNodeHelper(BSTNodePtr node, int key) {
+        BSTNodePtr z = TNULL;
+        BSTNodePtr x, y;
+        while (node != TNULL) {
+          if (node->value == key) {
+            z = node;
+          }
+
+          if (node->value <= key) {
+            node = node->right;
+          } else {
+            node = node->left;
+          }
+        }
+
+        if (z == TNULL) {
+          cout << "Key not found in the tree" << endl;
+          return;
+        }
+
+        y = z;
+        int y_original_color = y->color;
+        if (z->left == TNULL) {
+          x = z->right;
+          rbTransplant(z, z->right);
+        } else if (z->right == TNULL) {
+          x = z->left;
+          rbTransplant(z, z->left);
+        } else {
+          y = minimum(z->right);
+          y_original_color = y->color;
+          x = y->right;
+          if (y->parent == z) {
+            x->parent = y;
+          } else {
+            rbTransplant(y, y->right);
+            y->right = z->right;
+            y->right->parent = y;
+          }
+
+          rbTransplant(z, y);
+          y->left = z->left;
+          y->left->parent = y;
+          y->color = z->color;
+        }
+        delete z;
+        if (y_original_color == 0) {
+          deleteFix(x);
+        }
+      }
+
+      // For balancing the tree after insertion
+      void insertFix(BSTNodePtr k) {
+        BSTNodePtr u;
+        while (k->parent->color == 1) {
+          if (k->parent == k->parent->parent->right) {
+            u = k->parent->parent->left;
+            if (u->color == 1) {
+              u->color = 0;
+              k->parent->color = 0;
+              k->parent->parent->color = 1;
+              k = k->parent->parent;
+            } else {
+              if (k == k->parent->left) {
+                k = k->parent;
+                rightRotate(k);
+              }
+              k->parent->color = 0;
+              k->parent->parent->color = 1;
+              leftRotate(k->parent->parent);
+            }
+          } else {
+            u = k->parent->parent->right;
+
+            if (u->color == 1) {
+              u->color = 0;
+              k->parent->color = 0;
+              k->parent->parent->color = 1;
+              k = k->parent->parent;
+            } else {
+              if (k == k->parent->right) {
+                k = k->parent;
+                leftRotate(k);
+              }
+              k->parent->color = 0;
+              k->parent->parent->color = 1;
+              rightRotate(k->parent->parent);
+            }
+          }
+          if (k == _node) {
+            break;
+          }
+        }
+        _node->color = 0;
+      }
+
+      void printHelper(BSTNodePtr _node, string indent, bool last) {
+        if (_node != TNULL) {
+          cout << indent;
+          if (last) {
+            cout << "R----";
+            indent += "   ";
+          } else {
+            cout << "L----";
+            indent += "|  ";
+          }
+
+          string sColor = _node->color ? "RED" : "BLACK";
+          cout << _node->value << "(" << sColor << ")" << endl;
+          printHelper(_node->left, indent, false);
+          printHelper(_node->right, indent, true);
+        }
+      }
+
+      public:
+      RedBlackTree() {
+        TNULL = new BSTNode<value_type>;
+        TNULL->color = 0;
+        TNULL->left = nullptr;
+        TNULL->right = nullptr;
+        _node = TNULL;
+      }
+
+      void preorder() {
+        preOrderHelper(this->_node);
+      }
+
+      void inorder() {
+        inOrderHelper(this->_node);
+      }
+
+      void postorder() {
+        postOrderHelper(this->_node);
+      }
+
+      BSTNodePtr searchTree(int k) {
+        return searchTreeHelper(this->_node, k);
+      }
+
+      BSTNodePtr minimum(BSTNodePtr node) const {
+        while (node->left != TNULL) {
+          std::cout << "hi :)\n";
+          node = node->left;
+          std::cout << "hi :)\n";
+
+        }
+        return node;
+      }
+
+      BSTNodePtr maximum(BSTNodePtr node) const {
+        while (node->right != TNULL) {
+          node = node->right;
+        }
+        return node;
+      }
+
+      BSTNodePtr successor(BSTNodePtr x) {
+        if (x->right != TNULL) {
+          return minimum(x->right);
+        }
+
+        BSTNodePtr y = x->parent;
+        while (y != TNULL && x == y->right) {
+          x = y;
+          y = y->parent;
+        }
+        return y;
+      }
+
+      BSTNodePtr predecessor(BSTNodePtr x) {
+        if (x->left != TNULL) {
+          return maximum(x->left);
+        }
+
+        BSTNodePtr y = x->parent;
+        while (y != TNULL && x == y->left) {
+          x = y;
+          y = y->parent;
+        }
+
+        return y;
+      }
+
+      void leftRotate(BSTNodePtr x) {
+        BSTNodePtr y = x->right;
+        x->right = y->left;
+        if (y->left != TNULL) {
+          y->left->parent = x;
+        }
+        y->parent = x->parent;
+        if (x->parent == nullptr) {
+          this->_node = y;
+        } else if (x == x->parent->left) {
+          x->parent->left = y;
+        } else {
+          x->parent->right = y;
+        }
+        y->left = x;
+        x->parent = y;
+      }
+
+      void rightRotate(BSTNodePtr x) {
+        BSTNodePtr y = x->left;
+        x->left = y->right;
+        if (y->right != TNULL) {
+          y->right->parent = x;
+        }
+        y->parent = x->parent;
+        if (x->parent == nullptr) {
+          this->_node = y;
+        } else if (x == x->parent->right) {
+          x->parent->right = y;
+        } else {
+          x->parent->left = y;
+        }
+        y->right = x;
+        x->parent = y;
+      }
+
+      // Inserting a node
+      void insert(const value_type& val) {
+        BSTNodePtr node = new BSTNode<value_type>;
+        node->parent = nullptr;
+        node->value = val;
+        node->left = TNULL;
+        node->right = TNULL;
+        node->color = 1;
+
+        BSTNodePtr y = nullptr;
+        BSTNodePtr x = this->_node;
+
+        while (x != TNULL) {
+          y = x;
+          if (node->value < x->value) {
+            x = x->left;
+          } else {
+            x = x->right;
+          }
+        }
+
+        node->parent = y;
+        if (y == nullptr) {
+          _node = node;
+        } else if (node->value < y->value) {
+          y->left = node;
+        } else {
+          y->right = node;
+        }
+
+        if (node->parent == nullptr) {
+          node->color = 0;
+          return;
+        }
+
+        if (node->parent->parent == nullptr) {
+          return;
+        }
+
+        insertFix(node);
+      }
+
+      BSTNodePtr getRoot() {
+        return this->_node;
+      }
+
+      void deleteBSTNode(value_type value) {
+        deleteBSTNodeHelper(this->_node, value);
+      }
+
+      void printTree() {
+        if (_node) {
+          printHelper(this->_node, "", true);
+        }
+      }
+  };
+}
+#endif
+/*
+int main() {
+  RedBlackTree bst;
+  bst.insert(55);
+  bst.insert(40);
+  bst.insert(65);
+  bst.insert(60);
+  bst.insert(75);
+  bst.insert(57);
+
+  bst.printTree();
+  cout << endl
+     << "After deleting" << endl;
+  bst.deleteBSTBSTNode(40);
+  bst.printTree();
+}
+*/
