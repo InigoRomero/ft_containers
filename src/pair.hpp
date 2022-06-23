@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:39:36 by iromero-          #+#    #+#             */
-/*   Updated: 2022/05/07 19:36:50 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:14:04 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ namespace ft {
 	**	Prototypes
 	*/
 
-	template <class T1, class T2>
+	template <typename T1, typename T2>
 	struct pair;
 
-	template <class T1, class T2>
+	template <typename T1, typename T2>
 	pair<T1, T2> make_pair(T1 x, T2 y);
 
 	/*
 	**	pair class template
 	*/
 
-	template <class T1, class T2>
+	template <typename T1, typename T2>
 	struct pair
 	{
 

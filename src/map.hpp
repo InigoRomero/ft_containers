@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/06/14 20:09:37 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:44:00 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "reverse_iterator.hpp"
 #include "bidirectionnal_iterator.hpp"
+#include "BSTNode.hpp"
 #include "RedBlackTree.hpp"
 #include <iostream>
 
@@ -83,7 +84,7 @@ template < class Key,                                               // map::key_
 			/* *** INSERT *** */
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
-				
+				ft_root->insert(val);
 				return (ft::make_pair(iterator(ft_root), true));
 			}
 

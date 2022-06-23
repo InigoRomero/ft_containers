@@ -1,6 +1,9 @@
 #ifndef BIDIRECTIONAL_ITERATOR_HPP
 #define BIDIRECTIONAL_ITERATOR_HPP
 
+#include "BSTNode.hpp"
+#include "RedBlackTree.hpp"
+
 namespace ft
 {
     template <class iter, class T>
@@ -63,12 +66,12 @@ namespace ft
 
 			reference operator*() const
 			{
-				return (_ptr->_node->value);
+				return (_ptr->value);
 			}
 
 			pointer operator->() const
 			{
-				return (&_ptr->_node->value);
+				return (&_ptr->value);
 			}
 
 			bidirectionnal_iterator &operator++()
@@ -159,12 +162,12 @@ namespace ft
 
 		reference operator*() const
 		{
-			return (_ptr->_node->value);
+			return (_ptr->value);
 		}
 
 		const pointer operator->() const
 		{
-			return (&_ptr->_node->value);
+			return (&_ptr->value);
 		}
 
 		const_bidirectionnal_iterator &operator++()

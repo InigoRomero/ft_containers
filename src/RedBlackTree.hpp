@@ -15,7 +15,7 @@ namespace ft
     private:
           typedef Key				 														  key_type;
           typedef T 																		  mapped_type;
-          typedef ft::pair<const key_type,mapped_type> 		value_type;
+          typedef ft::pair< key_type,mapped_type> 		value_type;
           typedef BSTNode<value_type>                                   *BSTNodePtr;
 
     public:
@@ -24,8 +24,8 @@ namespace ft
 
       void initializeNULLBSTNode(BSTNodePtr node, BSTNodePtr parent) {
         node->parent = parent;
-        node->left = nullptr;
-        node->right = nullptr;
+        node->left = TNULL;
+        node->right = TNULL;
         node->color = 0;
       }
 
@@ -280,10 +280,8 @@ namespace ft
 
       BSTNodePtr minimum(BSTNodePtr node) const {
         while (node->left != TNULL) {
-          std::cout << "hi :)\n";
+          std::cout << "hi!\n";
           node = node->left;
-          std::cout << "hi :)\n";
-
         }
         return node;
       }
@@ -369,7 +367,7 @@ namespace ft
 
         BSTNodePtr y = nullptr;
         BSTNodePtr x = this->_node;
-
+        std::cout << "HI¿¿¿\n";
         while (x != TNULL) {
           y = x;
           if (node->value < x->value) {
@@ -378,7 +376,7 @@ namespace ft
             x = x->right;
           }
         }
-
+        std::cout << "HI¿¿¿\n";
         node->parent = y;
         if (y == nullptr) {
           _node = node;
@@ -387,16 +385,16 @@ namespace ft
         } else {
           y->right = node;
         }
-
+        std::cout << "HI¿¿¿\n";
         if (node->parent == nullptr) {
           node->color = 0;
           return;
         }
-
+        std::cout << "HI¿¿¿\n";
         if (node->parent->parent == nullptr) {
           return;
         }
-
+        std::cout << "HI¿¿¿\n";
         insertFix(node);
       }
 
