@@ -66,37 +66,37 @@ namespace ft
 
 			reference operator*() const
 			{
-				return (_ptr->value);
+				return (_ptr->_node->value);
 			}
 
 			pointer operator->() const
 			{
-				return (&_ptr->value);
+				return (&_ptr->_node->value);
 			}
 
 			bidirectionnal_iterator &operator++()
 			{
-				_ptr = _ptr->next();
+				_ptr = _ptr->successor(_ptr->_node);
 				return (*this);
 			}
 
 			bidirectionnal_iterator operator++(int)
 			{
 				bidirectionnal_iterator tmp(*this);
-				_ptr = _ptr->next();
+				_ptr = _ptr->successor(_ptr->_node);
 				return (tmp);
 			}
 
 			bidirectionnal_iterator &operator--()
 			{
-				_ptr = _ptr->prev();
+				_ptr->_node = _ptr->predecessor(_ptr->node);
 				return *this;
 			}
 
 			bidirectionnal_iterator operator--(int)
 			{
 				bidirectionnal_iterator tmp(*this);
-				_ptr = _ptr->prev();
+				_ptr->_node = _ptr->predecessor(_ptr->node);
 				return tmp;
 			}
 		};
@@ -162,37 +162,37 @@ namespace ft
 
 		reference operator*() const
 		{
-			return (_ptr->value);
+			return (_ptr->_node->value);
 		}
 
-		const pointer operator->() const
+		pointer operator->() const
 		{
-			return (&_ptr->value);
+			return (&_ptr->_node->value);
 		}
 
 		const_bidirectionnal_iterator &operator++()
 		{
-			_ptr = _ptr->next();
+			_ptr = _ptr->successor(_ptr->_node);
 			return (*this);
 		}
 
 		const_bidirectionnal_iterator operator++(int)
 		{
 			const_bidirectionnal_iterator tmp(*this);
-			_ptr = _ptr->next();
+			_ptr->_node = _ptr->successor(_ptr->_node);
 			return (tmp);
 		}
 
 		const_bidirectionnal_iterator &operator--()
 		{
-			_ptr = _ptr->prev();
+			_ptr->_node = _ptr->predecessor(_ptr->node);
 			return *this;
 		}
 
 		const_bidirectionnal_iterator operator--(int)
 		{
 			const_bidirectionnal_iterator tmp(*this);
-			_ptr = _ptr->prev();
+			_ptr->_node = _ptr->predecessor(_ptr->node);
 			return tmp;
 		}
 	};

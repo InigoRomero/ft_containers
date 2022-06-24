@@ -19,13 +19,17 @@ range (3)
 int		main(void)
 {
 	ft::map<int,int> first;
-
-	first.insert(ft::make_pair(1,10));
+	first.insert(ft::make_pair(8,60));
 	first.insert(ft::make_pair(2,40));
+	first.insert(ft::make_pair(1,10));
 //	first.insert(ft::make_pair('b',20));
 //	first.insert(ft::make_pair('c',30));
 //	first.insert(ft::make_pair('e',50));
 	ft::map<int,int>::const_iterator it = first.begin();
+	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	it++;
+	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	it++;
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 //	ft::cout << "end = " << first[0] << "\n";
 /*	for(ft::map<char,int>::const_iterator it = first.begin();

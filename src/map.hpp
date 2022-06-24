@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/06/19 15:44:00 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:35:16 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ template < class Key,                                               // map::key_
 			typedef typename allocator_type::const_reference 								const_reference;
 			typedef typename allocator_type::pointer 										pointer;
 			typedef typename allocator_type::const_pointer 									const_pointer;
-			typedef	ft::RedBlackTree<key_type, mapped_type>									map_node;
+			typedef	ft::RedBlackTree<const key_type, mapped_type>							map_node;
 			typedef ft::bidirectionnal_iterator<map_node, value_type>						iterator;
 			typedef ft::const_bidirectionnal_iterator<map_node, const value_type, iterator>	const_iterator;
 			typedef ft::ReverseIterator<iterator> 											reverse_iterator;

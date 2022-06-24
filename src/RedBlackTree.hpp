@@ -15,8 +15,8 @@ namespace ft
     private:
           typedef Key				 														  key_type;
           typedef T 																		  mapped_type;
-          typedef ft::pair< key_type,mapped_type> 		value_type;
-          typedef BSTNode<value_type>                                   *BSTNodePtr;
+          typedef ft::pair<key_type,mapped_type> 		      value_type;
+          typedef BSTNode<const value_type>               *BSTNodePtr;
 
     public:
       BSTNodePtr _node;
@@ -255,7 +255,7 @@ namespace ft
 
       public:
       RedBlackTree() {
-        TNULL = new BSTNode<value_type>;
+        TNULL = new BSTNode<const value_type>;
         TNULL->color = 0;
         TNULL->left = nullptr;
         TNULL->right = nullptr;
@@ -280,7 +280,6 @@ namespace ft
 
       BSTNodePtr minimum(BSTNodePtr node) const {
         while (node->left != TNULL) {
-          std::cout << "hi!\n";
           node = node->left;
         }
         return node;
@@ -358,16 +357,14 @@ namespace ft
 
       // Inserting a node
       void insert(const value_type& val) {
-        BSTNodePtr node = new BSTNode<value_type>;
+        BSTNodePtr node = new BSTNode<const value_type>(val);
         node->parent = nullptr;
-        node->value = val;
         node->left = TNULL;
         node->right = TNULL;
         node->color = 1;
 
         BSTNodePtr y = nullptr;
         BSTNodePtr x = this->_node;
-        std::cout << "HI¿¿¿\n";
         while (x != TNULL) {
           y = x;
           if (node->value < x->value) {
@@ -376,7 +373,6 @@ namespace ft
             x = x->right;
           }
         }
-        std::cout << "HI¿¿¿\n";
         node->parent = y;
         if (y == nullptr) {
           _node = node;
@@ -385,16 +381,13 @@ namespace ft
         } else {
           y->right = node;
         }
-        std::cout << "HI¿¿¿\n";
         if (node->parent == nullptr) {
           node->color = 0;
           return;
         }
-        std::cout << "HI¿¿¿\n";
         if (node->parent->parent == nullptr) {
           return;
         }
-        std::cout << "HI¿¿¿\n";
         insertFix(node);
       }
 
