@@ -32,7 +32,7 @@ namespace ft
       // Preorder
       void preOrderHelper(BSTNodePtr node) {
         if (node != TNULL) {
-          cout << node->value << " ";
+         
           preOrderHelper(node->left);
           preOrderHelper(node->right);
         }
@@ -42,7 +42,7 @@ namespace ft
       void inOrderHelper(BSTNodePtr node) {
         if (node != TNULL) {
           inOrderHelper(node->left);
-          cout << node->value << " ";
+         
           inOrderHelper(node->right);
         }
       }
@@ -52,16 +52,16 @@ namespace ft
         if (node != TNULL) {
           postOrderHelper(node->left);
           postOrderHelper(node->right);
-          cout << node->value << " ";
+         
         }
       }
 
       BSTNodePtr searchTreeHelper(BSTNodePtr node, int key) {
-        if (node == TNULL || key == node->value) {
+        if (node == TNULL || key == _node->value) {
           return node;
         }
 
-        if (key < node->value) {
+        if (key < _node->value) {
           return searchTreeHelper(node->left, key);
         }
         return searchTreeHelper(node->right, key);
@@ -143,11 +143,11 @@ namespace ft
         BSTNodePtr z = TNULL;
         BSTNodePtr x, y;
         while (node != TNULL) {
-          if (node->value == key) {
+          if (_node->value == key) {
             z = node;
           }
 
-          if (node->value <= key) {
+          if (_node->value <= key) {
             node = node->right;
           } else {
             node = node->left;
@@ -247,7 +247,7 @@ namespace ft
           }
 
           string sColor = _node->color ? "RED" : "BLACK";
-          cout << _node->value << "(" << sColor << ")" << endl;
+          cout << _node->value.first << "(" << sColor << ")" << endl;
           printHelper(_node->left, indent, false);
           printHelper(_node->right, indent, true);
         }
@@ -367,7 +367,7 @@ namespace ft
         BSTNodePtr x = this->_node;
         while (x != TNULL) {
           y = x;
-          if (node->value < x->value) {
+          if (_node->value < x->value) {
             x = x->left;
           } else {
             x = x->right;
@@ -376,7 +376,7 @@ namespace ft
         node->parent = y;
         if (y == nullptr) {
           _node = node;
-        } else if (node->value < y->value) {
+        } else if (_node->value.first < y->value.first) {
           y->left = node;
         } else {
           y->right = node;

@@ -19,23 +19,31 @@ range (3)
 int		main(void)
 {
 	ft::map<int,int> first;
+	first.insert(ft::make_pair(4,40));
 	first.insert(ft::make_pair(8,60));
-	first.insert(ft::make_pair(2,40));
 	first.insert(ft::make_pair(1,10));
-//	first.insert(ft::make_pair('b',20));
-//	first.insert(ft::make_pair('c',30));
-//	first.insert(ft::make_pair('e',50));
+	first.insert(ft::make_pair(7,30));
+	first.insert(ft::make_pair(3,5));
+	first.insert(ft::make_pair(2,5));
+
+
 	ft::map<int,int>::const_iterator it = first.begin();
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
-//	ft::cout << "end = " << first[0] << "\n";
-/*	for(ft::map<char,int>::const_iterator it = first.begin();
-    it != first.end(); ++it)
+//	ft::map<int,int>::const_iterator it2 = first.begin();
+//	std::cout << "key2 = "<< it2->first << " | value = " << it2->second << "  |\n";
+
+//	ft::map<int,int> copy_map(first.begin(), first.end());
+	//copy_map.insert(first.begin(), first.end());
+
+
+/*	for(
+    it2 != first.end(); it2++)
 	{
-		ft::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+		std::cout << "key2 = "<< it2->first << " | value = " << it2->second << "  |\n";
 	}
   //	ft::map<char,int> second (first.begin(),first.end());
 */

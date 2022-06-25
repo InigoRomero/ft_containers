@@ -76,15 +76,14 @@ namespace ft
 
 			bidirectionnal_iterator &operator++()
 			{
-				_ptr = _ptr->successor(_ptr->_node);
+				_ptr->_node = _ptr->successor(_ptr->_node);
 				return (*this);
 			}
 
 			bidirectionnal_iterator operator++(int)
 			{
-				bidirectionnal_iterator tmp(*this);
-				_ptr = _ptr->successor(_ptr->_node);
-				return (tmp);
+				_ptr->_node = _ptr->successor(_ptr->_node);
+				return (*this);
 			}
 
 			bidirectionnal_iterator &operator--()
@@ -172,13 +171,16 @@ namespace ft
 
 		const_bidirectionnal_iterator &operator++()
 		{
-			_ptr = _ptr->successor(_ptr->_node);
+			_ptr->_node = _ptr->_node->right;
 			return (*this);
 		}
 
 		const_bidirectionnal_iterator operator++(int)
 		{
+			std::cout << "hi¿\n";
 			const_bidirectionnal_iterator tmp(*this);
+			std::cout << "right = " << _ptr->_node->right->value.first << std::endl;
+			std::cout << "left = " << _ptr->_node->left->value.first << std::endl;
 			_ptr->_node = _ptr->successor(_ptr->_node);
 			return (tmp);
 		}

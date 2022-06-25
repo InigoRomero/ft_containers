@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/06/24 18:35:16 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/06/25 16:49:52 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ template < class Key,                                               // map::key_
 			typedef typename allocator_type::pointer 										pointer;
 			typedef typename allocator_type::const_pointer 									const_pointer;
 			typedef	ft::RedBlackTree<const key_type, mapped_type>							map_node;
-			typedef ft::bidirectionnal_iterator<map_node, value_type>						iterator;
+			typedef ft::bidirectionnal_iterator<map_node, const value_type>					iterator;
 			typedef ft::const_bidirectionnal_iterator<map_node, const value_type, iterator>	const_iterator;
 			typedef ft::ReverseIterator<iterator> 											reverse_iterator;
 			typedef ft::ReverseIterator<const_iterator>										const_reverse_iterator;
@@ -63,14 +63,16 @@ template < class Key,                                               // map::key_
             ft_root(), ft_compare(comp), ft_allocator(alloc) {
 				ft_root = ft_allocator.allocate(24);
 				ft_allocator.construct(ft_root, map_node());
-				ft_root->initializeNULLBSTNode(ft_root->_node , ft_root->_node->parent);
+				//ft_root->initializeNULLBSTNode(ft_root->_node , ft_root->_node->parent);
             }
 
 			//range
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 			const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
-			ft_root(), ft_compare(comp), ft_allocator(alloc) {
+			ft_root(), ft_compare(comp), ft_allocator(alloc), ft_size(0) {
+				std::cout << first->first << "   <--fist\n";
+				std::cout << last->first << "   <--last\n";
 				for (InputIterator it = first; it != last; it++)
 					ft_size++;
 				std::cout << "how much -->" << ft_size << std::endl;
@@ -85,7 +87,24 @@ template < class Key,                                               // map::key_
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				ft_root->insert(val);
+				std::cout << "--------------------------------------\n";
+				ft_root->printTree();
+				std::cout << "--------------------------------------\n";
 				return (ft::make_pair(iterator(ft_root), true));
+			}
+
+			//with hint
+			iterator insert (iterator position, const value_type& val) {
+
+			}
+
+			//range
+			template <class InputIterator>
+  			void insert (InputIterator first, InputIterator last) {
+				while (first != last) {
+					map_node *node = ft_root->insert(first);
+					first++;
+				}
 			}
 
 			/* *** OPERATORS *** */
@@ -119,13 +138,14 @@ template < class Key,                                               // map::key_
 
 			iterator begin() { 
 				map_node *node = ft_root;
-				node->_node = ft_root->minimum(ft_root->_node);
+
+				node->_node = node->minimum(node->_node);
 				return iterator(node); 
 			}
 
 			iterator end() { 
 				map_node *node = ft_root;
-				node->_node = ft_root->maximum(ft_root->_node);
+				node->_node = node->maximum(ft_root->_node);
 				return iterator(node); 
 			}
 
