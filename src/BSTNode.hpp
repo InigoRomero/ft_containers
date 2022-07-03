@@ -2,7 +2,7 @@
 #define BSTNODE_HPP
 
 #include "pair.hpp"
-
+#include <iostream>
 namespace ft
 {
 	template<class Pair>

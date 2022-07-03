@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/06/25 16:49:52 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:26:32 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ template < class Key,                                               // map::key_
             //  default
             explicit map (const key_compare& comp = key_compare(),const allocator_type& alloc = allocator_type()):
             ft_root(), ft_compare(comp), ft_allocator(alloc) {
-				ft_root = ft_allocator.allocate(24);
+				ft_root = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_root, map_node());
 				//ft_root->initializeNULLBSTNode(ft_root->_node , ft_root->_node->parent);
             }
@@ -87,9 +87,9 @@ template < class Key,                                               // map::key_
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				ft_root->insert(val);
-				std::cout << "--------------------------------------\n";
-				ft_root->printTree();
-				std::cout << "--------------------------------------\n";
+				//std::cout << "--------------------------------------\n";
+				//ft_root->printTree();
+				//std::cout << "--------------------------------------\n";
 				return (ft::make_pair(iterator(ft_root), true));
 			}
 
@@ -137,16 +137,28 @@ template < class Key,                                               // map::key_
 			/* *** ITERATORS *** */
 
 			iterator begin() { 
-				map_node *node = ft_root;
+				map_node *copy = ft_root;
+				copy->_node = ft_root->minimum(copy->_node);
 
-				node->_node = node->minimum(node->_node);
-				return iterator(node); 
+				return iterator(copy); 
+		/*		map_node *copy;
+				copy = ft_allocator.allocate(300);
+				ft_allocator.construct(copy, map_node());
+				copy->initializeNULLBSTNode(copy->_node, copy->_node->parent);
+
+				copy->copyTree(ft_root->_node);
+				copy->_node = ft_root->minimum(ft_root->_node);
+				copy->_node->right = ft_root->minimum(ft_root->_node)->right;
+				copy->_node->left = ft_root->minimum(ft_root->_node)->left;
+				
+				return iterator(copy); */
 			}
 
 			iterator end() { 
-				map_node *node = ft_root;
-				node->_node = node->maximum(ft_root->_node);
-				return iterator(node); 
+				map_node *copy = ft_root;
+				copy->_node = ft_root->maximum(copy->_node);
+
+				return iterator(copy); 
 			}
 
 			size_type max_size() const { return (ft_allocator.max_size()); }
