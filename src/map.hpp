@@ -6,13 +6,13 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/07/03 18:26:32 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/07/07 20:57:28 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 #define MAP_HPP
-
+#include <inttypes.h>
 #include "reverse_iterator.hpp"
 #include "bidirectionnal_iterator.hpp"
 #include "BSTNode.hpp"
@@ -87,9 +87,9 @@ template < class Key,                                               // map::key_
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				ft_root->insert(val);
-				//std::cout << "--------------------------------------\n";
-				//ft_root->printTree();
-				//std::cout << "--------------------------------------\n";
+				std::cout << "--------------------------------------\n";
+				ft_root->printTree();
+				std::cout << "--------------------------------------\n";
 				return (ft::make_pair(iterator(ft_root), true));
 			}
 
@@ -141,15 +141,13 @@ template < class Key,                                               // map::key_
 				copy->_node = ft_root->minimum(copy->_node);
 
 				return iterator(copy); 
-		/*		map_node *copy;
+			/*	map_node *copy;
 				copy = ft_allocator.allocate(300);
 				ft_allocator.construct(copy, map_node());
 				copy->initializeNULLBSTNode(copy->_node, copy->_node->parent);
 
 				copy->copyTree(ft_root->_node);
-				copy->_node = ft_root->minimum(ft_root->_node);
-				copy->_node->right = ft_root->minimum(ft_root->_node)->right;
-				copy->_node->left = ft_root->minimum(ft_root->_node)->left;
+				copy->_node = copy->minimum(copy->_node);
 				
 				return iterator(copy); */
 			}

@@ -315,8 +315,8 @@ namespace ft
 
           BSTNodePtr y = x->parent;
           while (y != TNULL && x->value.first == y->right->value.first) {
-			x = y;
-			y = y->parent;
+            x = y;
+            y = y->parent;
           }
           return y;
         }

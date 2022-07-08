@@ -172,15 +172,29 @@ namespace ft
 
 		const_bidirectionnal_iterator &operator++()
 		{
-			_ptr->_node = _ptr->successor(_ptr->_node->parent);
+			_ptr->_node = _ptr->successor(_ptr->_node);
 			return (*this);
 		}
 
 		const_bidirectionnal_iterator operator++(int)
 		{
-			const_bidirectionnal_iterator tmp(*this);
-			_ptr->_node = _ptr->successor(_ptr->_node);
-			return (tmp);
+			//_ptr->_node = _ptr->successor(_ptr->_node);
+			next();
+			return (*this);
+		}
+
+		void next(void)
+		{
+			if (_ptr->right != NULL) 
+				while (_ptr->left != NULL) 
+        			_ptr = _ptr->left;
+
+			BSTNode<value_type> *y = _ptr->parent;
+			while (y != NULL && _ptr->value.first == y->right->value.first) {
+				_ptr = y;
+				y = y->parent;
+			}
+			return y;
 		}
 
 		const_bidirectionnal_iterator &operator--()
