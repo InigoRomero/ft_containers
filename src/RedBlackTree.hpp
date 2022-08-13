@@ -374,7 +374,7 @@ namespace ft
         // Inserting a node
         void insert(const value_type& val) {
           BSTNodePtr node = new BSTNode<const value_type>(val);
-        // node->parent = NULL;
+          node->parent = TNULL;
           node->left = TNULL;
           node->right = TNULL;
           node->color = 1;

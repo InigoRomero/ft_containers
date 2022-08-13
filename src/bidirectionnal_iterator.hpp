@@ -89,14 +89,14 @@ namespace ft
 
 			bidirectionnal_iterator &operator--()
 			{
-				_ptr->_node = _ptr->predecessor(_ptr->node);
+				_ptr->_node = _ptr->predecessor(_ptr->_node);
 				return *this;
 			}
 
 			bidirectionnal_iterator operator--(int)
 			{
 				bidirectionnal_iterator tmp(*this);
-				_ptr->_node = _ptr->predecessor(_ptr->node);
+				_ptr->_node = _ptr->predecessor(_ptr->_node);
 				return tmp;
 			}
 		};
@@ -178,35 +178,35 @@ namespace ft
 
 		const_bidirectionnal_iterator operator++(int)
 		{
-			//_ptr->_node = _ptr->successor(_ptr->_node);
-			next();
+			_ptr->_node = _ptr->successor(_ptr->_node);
+			//return next();
 			return (*this);
 		}
 
-		void next(void)
+	/*	const_bidirectionnal_iterator next(void)
 		{
-			if (_ptr->right != NULL) 
-				while (_ptr->left != NULL) 
-        			_ptr = _ptr->left;
+			if (_ptr->_node->right != NULL) 
+				while (_ptr->_node->right != NULL) 
+        			_ptr->_node = _ptr->_node->right;
 
-			BSTNode<value_type> *y = _ptr->parent;
-			while (y != NULL && _ptr->value.first == y->right->value.first) {
+			value_type y = _ptr->_node->parent;
+			while (y != NULL && _ptr->_node->value.first == y->_node->right->value.first) {
 				_ptr = y;
-				y = y->parent;
+				y = y->_node->parent;
 			}
 			return y;
-		}
+		}*/
 
 		const_bidirectionnal_iterator &operator--()
 		{
-			_ptr->_node = _ptr->predecessor(_ptr->node);
+			_ptr->_node = _ptr->predecessor(_ptr->_node);
 			return *this;
 		}
 
 		const_bidirectionnal_iterator operator--(int)
 		{
 			const_bidirectionnal_iterator tmp(*this);
-			_ptr->_node = _ptr->predecessor(_ptr->node);
+			_ptr->_node = _ptr->predecessor(_ptr->_node);
 			return tmp;
 		}
 	};
