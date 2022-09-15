@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/08/13 20:02:21 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/09/15 17:33:17 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <inttypes.h>
 #include "reverse_iterator.hpp"
 #include "bidirectionnal_iterator.hpp"
-#include "BSTNode.hpp"
 #include "RedBlackTree.hpp"
 #include <iostream>
+#include <stdio.h>
 
 namespace ft {
 template < class Key,                                               // map::key_type
@@ -38,8 +38,8 @@ template < class Key,                                               // map::key_
 			typedef typename allocator_type::const_reference 								const_reference;
 			typedef typename allocator_type::pointer 										pointer;
 			typedef typename allocator_type::const_pointer 									const_pointer;
-			typedef	ft::RedBlackTree<const key_type, mapped_type>							map_node;
-			typedef ft::bidirectionnal_iterator<map_node, const value_type>					iterator;
+			typedef	ft::RedBlackTree<value_type>							map_node;
+			typedef ft::bidirectionnal_iterator<map_node, value_type>						iterator;
 			typedef ft::const_bidirectionnal_iterator<map_node, const value_type, iterator>	const_iterator;
 			typedef ft::ReverseIterator<iterator> 											reverse_iterator;
 			typedef ft::ReverseIterator<const_iterator>										const_reverse_iterator;
@@ -92,7 +92,7 @@ template < class Key,                                               // map::key_
 				ft_root->printTree();
 				std::cout << "--------------------------------------\n";
 				ft_size++;
-				return (ft::make_pair(iterator(ft_root), true));
+				return (ft::make_pair(iterator(*ft_root), true));
 			}
 
 			//with hint
@@ -145,40 +145,23 @@ template < class Key,                                               // map::key_
 			/* *** ITERATORS *** */
 
 			iterator		begin() { 
-				map_node *copy = ft_root;
-				copy->_node = ft_root->minimum(copy->_node);
-
-				return iterator(copy); 
-			/*	map_node *copy;
-				copy = ft_allocator.allocate(300);
-				ft_allocator.construct(copy, map_node());
-				copy->initializeNULLBSTNode(copy->_node, copy->_node->parent);
-
-				copy->copyTree(ft_root->_node);
-				copy->_node = copy->minimum(copy->_node);
-				
-				return iterator(copy); */
+				ft_root->_node = ft_root->minimum(ft_root->_node);
+				return iterator(*ft_root); 
 			}
 
 			iterator 		end() { 
-				map_node *copy = ft_root;
-				copy->_node = ft_root->maximum(copy->_node);
-
-				return iterator(copy); 
+				ft_root->_node = ft_root->maximum(ft_root->_node);
+				return iterator(*ft_root); 
 			}
 
 			const_iterator	begin() const { 
-				map_node *copy = ft_root;
-				copy->_node = ft_root->minimum(copy->_node);
-				std::cout << "hi!\n";
-				return const_iterator(copy); 
+				ft_root->_node = ft_root->minimum(ft_root->_node);
+				return const_iterator(*ft_root); 
 			}
 
 			const_iterator 	end() const { 
-				map_node *copy = ft_root;
-				copy->_node = ft_root->maximum(copy->_node);
-
-				return const_iterator(copy); 
+				ft_root->_node = ft_root->maximum(ft_root->_node);
+				return const_iterator(*ft_root); 
 			}
 
 			/* *** CAPACITY *** */

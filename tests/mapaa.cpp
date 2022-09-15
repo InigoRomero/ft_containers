@@ -29,7 +29,7 @@ int		main(void)
 	//ft::map<int,int>::const_iterator it_end = first.end();
 	//std::cout << "key = "<< it_end->first << " | value = " << it_end->second << "  |\n";
 
-	ft::map<int,int>::const_iterator it = first.begin();
+	ft::map<int,int>::iterator it = first.begin();
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 
 	it++;
@@ -41,9 +41,10 @@ int		main(void)
 	it++;
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
+
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 
-		ft::map<int,int>::const_iterator it2 = first.begin();
+	ft::map<int,int>::iterator it2 = first.begin();
 	std::cout << "key = "<< it2->first << " | value = " << it2->second << "  |\n";
 //	ft::map<int,int>::const_iterator it_end = first.begin();
 //	std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";

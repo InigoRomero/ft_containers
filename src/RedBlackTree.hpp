@@ -8,22 +8,17 @@ using namespace std;
 
 namespace ft
 {
-  template < class Key,                                               // map::key_type
-           class T                                                 // map::mapped_type
-           > 
+  template < class value_type> 
   class RedBlackTree {
     private:
-          typedef Key				 														  key_type;
-          typedef T 																		  mapped_type;
-          typedef ft::pair<key_type,mapped_type> 		      value_type;
-          typedef BSTNode<const value_type>               *BSTNodePtr;
+          typedef BSTNode<value_type>               *BSTNodePtr;
 
     public:
         BSTNodePtr _node;
         BSTNodePtr TNULL;
 
         RedBlackTree() {
-          TNULL = new BSTNode<const value_type>;
+          TNULL = new BSTNode<value_type>;
           TNULL->color = 0;
           TNULL->left = NULL;
           TNULL->right = NULL;
@@ -308,7 +303,7 @@ namespace ft
           return node;
         }
 
-        BSTNodePtr successor(BSTNodePtr x) {
+        BSTNodePtr successor(BSTNodePtr &x) {
           if (x->right != TNULL) {
             return minimum(x->right);
           }
@@ -373,7 +368,7 @@ namespace ft
 
         // Inserting a node
         void insert(const value_type& val) {
-          BSTNodePtr node = new BSTNode<const value_type>(val);
+          BSTNodePtr node = new BSTNode<value_type>(val);
           node->parent = TNULL;
           node->left = TNULL;
           node->right = TNULL;
