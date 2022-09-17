@@ -3,8 +3,6 @@
 
 #include "pair.hpp"
 #include "BSTNode.hpp"
-#include <iostream>
-using namespace std;
 
 namespace ft
 {
@@ -158,7 +156,7 @@ namespace ft
           }
 
           if (z == TNULL) {
-            cout << "Key not found in the tree" << endl;
+            std::cout << "Key not found in the tree" << std::endl;
             return;
           }
 
@@ -253,19 +251,19 @@ namespace ft
 
         }
 
-        void printHelper(BSTNodePtr _node, string indent, bool last) {
+        void printHelper(BSTNodePtr _node, std::string indent, bool last) {
           if (_node != TNULL) {
-            cout << indent;
+            std::cout << indent;
             if (last) {
-            	cout << "R----";
+            	std::cout << "R----";
             	indent += "   ";
             } else {
-              cout << "L----";
+              std::cout << "L----";
               indent += "|  ";
             }
 
-            string sColor = _node->color ? "RED" : "BLACK";
-            cout << _node->value.first << "(" << sColor << ")" << endl;
+            std::string sColor = _node->color ? "RED" : "BLACK";
+            std::cout << _node->value.first << "(" << sColor << ")" << std::endl;
             printHelper(_node->left, indent, false);
             printHelper(_node->right, indent, true);
           }

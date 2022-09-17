@@ -12,12 +12,9 @@
 
 #ifndef MAP_HPP
 #define MAP_HPP
-#include <inttypes.h>
 #include "reverse_iterator.hpp"
 #include "bidirectionnal_iterator.hpp"
 #include "RedBlackTree.hpp"
-#include <iostream>
-#include <stdio.h>
 
 namespace ft {
 template < class Key,                                               // map::key_type
@@ -170,7 +167,7 @@ template < class Key,                                               // map::key_
 
 			const_iterator 	end() const { 
 				ft_root->_node = ft_root->maximum(ft_root->_node);
-				return const_iterator(ft_root); 
+				return const_iterator(*ft_root); 
 			}
 
 			/* *** CAPACITY *** */
