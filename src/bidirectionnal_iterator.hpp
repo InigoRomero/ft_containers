@@ -22,7 +22,7 @@ namespace ft
 			value_type _current;
 		public:
 		
-			bidirectionnal_iterator(): _current(nullptr)
+			bidirectionnal_iterator(): _current(NULL)
 			{
 
 			}
@@ -42,7 +42,7 @@ namespace ft
 
 			}
 
-			value_type *get_internal_pointer(void) const
+			value_type get_internal_pointer(void) const
 			{
 				return _current;
 			}
@@ -56,12 +56,12 @@ namespace ft
 
 			bool operator==(const bidirectionnal_iterator &x)
 			{
-				return (_current == x._current);
+				return (_current._node == x._current._node);
 			}
 	
 			bool operator!=(const bidirectionnal_iterator &x)
 			{
-				return (_current != x._current);
+				return (_current._node != x._current._node);
 			}
 
 			reference operator*() const
@@ -113,7 +113,7 @@ namespace ft
 	protected:
 		value_type _current;
 	public:
-		const_bidirectionnal_iterator(): _current(nullptr)
+		const_bidirectionnal_iterator(): _current()
 		{
 
 		}
@@ -138,7 +138,7 @@ namespace ft
 
 		}
 
-		value_type *get_internal_pointer(void) const
+		value_type get_internal_pointer(void) const
 		{
 			return _current;
 		}
@@ -152,12 +152,12 @@ namespace ft
 
 		bool operator==(const const_bidirectionnal_iterator &x) const
 		{
-			return (_current == x._current);
+			return (_current._node == x._current._node);
 		}
 
 		bool operator!=(const const_bidirectionnal_iterator &x) const
 		{
-			return (_current != x._current);
+			return (_current._node != x._current._node);
 		}
 
 		reference operator*() const

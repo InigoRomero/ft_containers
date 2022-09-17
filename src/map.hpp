@@ -6,7 +6,7 @@
 /*   By: iromero- <iromero-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 18:13:17 by iromero-          #+#    #+#             */
-/*   Updated: 2022/09/15 17:33:17 by iromero-         ###   ########.fr       */
+/*   Updated: 2022/09/15 19:35:36 by iromero-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,15 @@ template < class Key,                                               // map::key_
 			{
 			}
 
+			map& operator=(const map& x)
+			{
+				ft_compare = x.ft_compare;
+				ft_size = 0;
+				ft_allocator = x.ft_allocator;
+				insert(x.begin(), x.end());
+				return (*this);
+			}
+
 			/* *** INSERT *** */
 			
 			//single
@@ -103,7 +112,7 @@ template < class Key,                                               // map::key_
 				ft_root->printTree();
 				std::cout << "--------------------------------------\n";
 				ft_size++;
-				return (ft::make_pair(iterator(ft_root), true));
+				return iterator(*ft_root);
 			}
 
 			//range
@@ -161,7 +170,7 @@ template < class Key,                                               // map::key_
 
 			const_iterator 	end() const { 
 				ft_root->_node = ft_root->maximum(ft_root->_node);
-				return const_iterator(*ft_root); 
+				return const_iterator(ft_root); 
 			}
 
 			/* *** CAPACITY *** */
@@ -172,6 +181,7 @@ template < class Key,                                               // map::key_
 
             size_type	max_size() const { return ft_allocator.max_size(); }
 	};
+
 }
 
 #endif

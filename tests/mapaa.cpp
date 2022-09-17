@@ -44,8 +44,14 @@ int		main(void)
 
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 
-	ft::map<int,int>::iterator it2 = first.begin();
+	ft::map<int,int>::iterator it2 = first.end();
+	ft::map<int,int>::iterator it3 = first.begin();
 	std::cout << "key = "<< it2->first << " | value = " << it2->second << "  |\n";
+
+	 for (; it3 != it2; ++it3) {
+		 	std::cout << "key = "<< it2->first << " | value = " << it2->second << "  |\n";
+	 }
+	ft::map<int,int>::const_iterator ito = first.begin(), ite = first.end();
 //	ft::map<int,int>::const_iterator it_end = first.begin();
 //	std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";
 

@@ -416,8 +416,6 @@ namespace ft
             printHelper(this->_node, "", true);
           }
         }
-
-
   };
 }
 #endif
