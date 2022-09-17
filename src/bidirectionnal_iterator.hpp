@@ -22,7 +22,7 @@ namespace ft
 			value_type _current;
 		public:
 		
-			bidirectionnal_iterator(): _current(NULL)
+			bidirectionnal_iterator(): _current()
 			{
 
 			}
