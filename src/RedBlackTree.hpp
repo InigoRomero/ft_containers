@@ -33,7 +33,6 @@ namespace ft
         // Preorder
         void preOrderHelper(BSTNodePtr node) {
           if (node != TNULL) {
-          
             preOrderHelper(node->left);
             preOrderHelper(node->right);
           }
@@ -43,7 +42,6 @@ namespace ft
         void inOrderHelper(BSTNodePtr node) {
           if (node != TNULL) {
             inOrderHelper(node->left);
-          
             inOrderHelper(node->right);
           }
         }
@@ -53,7 +51,6 @@ namespace ft
           if (node != TNULL) {
             postOrderHelper(node->left);
             postOrderHelper(node->right);
-          
           }
         }
 
@@ -156,7 +153,7 @@ namespace ft
           }
 
           if (z == TNULL) {
-            std::cout << "Key not found in the tree" << std::endl;
+            //std::cout << "Key not found in the tree" << std::endl;
             return;
           }
 
@@ -189,51 +186,6 @@ namespace ft
           if (y_original_color == 0) {
             deleteFix(x);
           }
-        }
-
-        // For balancing the tree after insertion
-        void insertFix(BSTNodePtr k) {
-          BSTNodePtr u;
-          while (k->parent->color == 1) {
-            if (k->parent == k->parent->parent->right) {
-              u = k->parent->parent->left;
-              if (u->color == 1) {
-                u->color = 0;
-                k->parent->color = 0;
-                k->parent->parent->color = 1;
-                k = k->parent->parent;
-              } else {
-                if (k == k->parent->left) {
-                  k = k->parent;
-                  rightRotate(k);
-                }
-                k->parent->color = 0;
-                k->parent->parent->color = 1;
-                leftRotate(k->parent->parent);
-              }
-            } else {
-              u = k->parent->parent->right;
-
-              if (u->color == 1) {
-                u->color = 0;
-                k->parent->color = 0;
-                k->parent->parent->color = 1;
-                k = k->parent->parent;
-              } else {
-                if (k == k->parent->right) {
-                  k = k->parent;
-                  leftRotate(k);
-                }
-                k->parent->color = 0;
-                k->parent->parent->color = 1;
-                rightRotate(k->parent->parent);
-              }
-            }
-            if (k == _node) {
-            	break;
-            }
-          }
-          _node->color = 0;
         }
 
 		void copyTree(BSTNodePtr &x) {
@@ -286,18 +238,14 @@ namespace ft
         }
 
         BSTNodePtr minimum(BSTNodePtr node) const {
-
-          while (node->left != TNULL) {
+          while (node->left != TNULL)
             node = node->left;
-          }
-
           return node;
         }
 
         BSTNodePtr maximum(BSTNodePtr node) const {
-          while (node->right != TNULL) {
+          while (node->right != TNULL)
             node = node->right;
-          }
           return node;
         }
 
@@ -365,7 +313,7 @@ namespace ft
         }
 
         // Inserting a node
-        void insert(const value_type& val) {
+        BSTNodePtr insert(const value_type& val) {
           BSTNodePtr node = new BSTNode<value_type>(val);
           node->parent = TNULL;
           node->left = TNULL;
@@ -392,13 +340,59 @@ namespace ft
           }
           if (node->parent == NULL) {
             node->color = 0;
-            return;
+            return node;
           }
           if (node->parent->parent == NULL) {
-            return;
+            return node;
           }
 
-          insertFix(node);
+          return insertFix(node);
+        }
+
+        // For balancing the tree after insertion
+        BSTNodePtr insertFix(BSTNodePtr k) {
+          BSTNodePtr u;
+          while (k->parent->color == 1) {
+            if (k->parent == k->parent->parent->right) {
+              u = k->parent->parent->left;
+              if (u->color == 1) {
+                u->color = 0;
+                k->parent->color = 0;
+                k->parent->parent->color = 1;
+                k = k->parent->parent;
+              } else {
+                if (k == k->parent->left) {
+                  k = k->parent;
+                  rightRotate(k);
+                }
+                k->parent->color = 0;
+                k->parent->parent->color = 1;
+                leftRotate(k->parent->parent);
+              }
+            } else {
+              u = k->parent->parent->right;
+              if (u->color == 1) {
+                u->color = 0;
+                k->parent->color = 0;
+                k->parent->parent->color = 1;
+                k = k->parent->parent;
+              } else {
+                if (k == k->parent->right) {
+                  k = k->parent;
+                  leftRotate(k);
+                }
+                k->parent->color = 0;
+                k->parent->parent->color = 1;
+                rightRotate(k->parent->parent);
+              }
+            }
+            if (k == _node) {
+            	break;
+            }
+          }
+          _node->color = 0;
+          std::cout << "hi!\n";
+          return (k);
         }
 
         BSTNodePtr getRoot() {
