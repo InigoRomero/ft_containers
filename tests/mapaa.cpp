@@ -18,27 +18,29 @@ range (3)
 
 int		main(void)
 {
-	ft::map<int,int> first;
-	first.insert(ft::make_pair(42,40));
-	first.insert(ft::make_pair(42,60));
-	first.insert(ft::make_pair(50,10));
-	first.insert(ft::make_pair(35,30));
-	first.insert(ft::make_pair(75,5));
-	first.insert(ft::make_pair(57,5));
+	ft::map<int, std::string> first;
+	first.insert(ft::make_pair(42,"lol"));
+	first.insert(ft::make_pair(42,"mdr"));
+	first.insert(ft::make_pair(50,"mdr"));
+	first.insert(ft::make_pair(35,"funny"));
+	first.insert(ft::make_pair(45,"jaaj"));
+	first.insert(ft::make_pair(57,"jaaj"));
 
 	// with for  ------------------------------------------------------------------------------------
-	ft::map<int,int>::iterator ite = first.end();
+	ft::map<int, std::string>::iterator ite = first.end();
 	std::cout << "[END] key = "<< ite->first << " | value = " << ite->second << "  |\n\n";
-	ft::map<int,int>::iterator beg = first.begin();
+	ft::map<int, std::string>::iterator beg = first.begin();
 	std::cout << "[BEGIN] key = "<< beg->first << " | value = " << ite->second << "  |\n\n";
 	for (; beg != ite; beg++) {
 		std::cout << "key = "<< beg->first << " | value = " << beg->second << "  |\n";
 	}
 	std::cout << "--------------------------------\n";
 	std::cout << "--------------------------------\n";
+	std::cout << "--------------------------------\n";
+	std::cout << "--------------------------------\n";
 
 	// one by one ------------------------------------------------------------------------------------
-	ft::map<int,int>::iterator it = first.begin();
+	ft::map<int, std::string>::iterator it = first.begin();
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 
 	it++;
@@ -52,10 +54,10 @@ int		main(void)
 	it++;
 
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
-//	ft::map<int,int>::const_iterator it_end = first.begin();
+//	ft::map<int, std::string>::const_iterator it_end = first.begin();
 //	std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";
 
-//	ft::map<int,int> copy_map(first.begin(), first.end());
+//	ft::map<int, std::string> copy_map(first.begin(), first.end());
 	//copy_map.insert(first.begin(), first.end());
 
 

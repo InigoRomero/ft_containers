@@ -23,8 +23,8 @@ namespace ft
           _node = TNULL;
         }
 
-        void initializeNULLBSTNode(BSTNodePtr node, BSTNodePtr parent) {
-          node->parent = parent;
+        void initializeNULLBSTNode(BSTNodePtr node) {
+          node->parent = TNULL;
           node->left = TNULL;
           node->right = TNULL;
           node->color = 0;
@@ -345,14 +345,13 @@ namespace ft
           if (node->parent->parent == NULL) {
             return node;
           }
-
           return insertFix(node);
         }
 
         // For balancing the tree after insertion
         BSTNodePtr insertFix(BSTNodePtr k) {
           BSTNodePtr u;
-          while (k->parent->color == 1) {
+          while (k->parent && k->parent->color == 1) {
             if (k->parent == k->parent->parent->right) {
               u = k->parent->parent->left;
               if (u->color == 1) {
@@ -375,6 +374,7 @@ namespace ft
                 u->color = 0;
                 k->parent->color = 0;
                 k->parent->parent->color = 1;
+                std::cout << "Value of k->parent: " << k->parent->value.second << "second parent: " << k->parent->parent->value.second   << "| I am not rotating 2 \n";
                 k = k->parent->parent;
               } else {
                 if (k == k->parent->right) {
@@ -390,8 +390,9 @@ namespace ft
             	break;
             }
           }
+
           _node->color = 0;
-          std::cout << "hi!\n";
+
           return (k);
         }
 

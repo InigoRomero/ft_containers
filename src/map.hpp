@@ -56,6 +56,32 @@ template < class Key,                                               // map::key_
 
         public:
 
+
+			class value_compare
+			{
+				friend class map;
+
+				protected:
+
+					Compare comp;
+
+					value_compare(Compare c): comp(c)
+					{
+
+					}
+
+				public:
+
+					typedef bool result_type;
+					typedef value_type first_argument_type;
+					typedef value_type second_argument_type;
+
+					bool operator()(const value_type &x, const value_type &y) const
+					{
+						return (comp(x.first, y.first));
+					}
+			};
+
             /* *** CONSTRUCTORS *** */
             //  default
             explicit map (const key_compare& comp = key_compare(),const allocator_type& alloc = allocator_type()):
@@ -63,15 +89,13 @@ template < class Key,                                               // map::key_
 				// root
 				ft_root = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_root, map_node());
-				ft_root->initializeNULLBSTNode(ft_root->_node , ft_root->_node->parent);
 				//begin
 				ft_begin = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_begin, map_node());
-				ft_begin->initializeNULLBSTNode(ft_begin->_node , ft_begin->_node->parent);
 				// end
 				ft_end = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_end, map_node());
-				ft_end->initializeNULLBSTNode(ft_end->_node , ft_end->_node->parent);
+				//ft_root->initializeNULLBSTNode(ft_root->_node);
             }
 
 			//range
@@ -99,8 +123,13 @@ template < class Key,                                               // map::key_
 				insert(x.begin(), x.end());
 				return (*this);
 			}
+			/* *** ELEMENT ACCESS *** */
 
-			/* *** INSERT *** */
+			mapped_type& operator[](const key_type& k)
+			{
+				return (*(this->insert(value_type(k, mapped_type())).first)).second;
+			}
+			/* *** MODIFIERS *** */
 			
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
@@ -109,7 +138,7 @@ template < class Key,                                               // map::key_
 				//ft_root->printTree();
 				//std::cout << "--------------------------------------\n";
 				ft_size++;
-				return (ft::make_pair(iterator(*ft_root), true));
+				return (ft::make_pair(iterator(*ft_end), true));
 			}
 
 			//with hint
@@ -117,26 +146,60 @@ template < class Key,                                               // map::key_
 				(void)position;
 				ft_end->_node = ft_root->insert(val);
 				//std::cout << "--------------------------------------\n";
-				ft_root->printTree();
+				//ft_root->printTree();
 				//std::cout << "--------------------------------------\n";
 				ft_size++;
-				return iterator(*ft_root);
+				return iterator(*ft_end);
 			}
 
 			//range
 			template <class InputIterator>
   			void				insert (InputIterator first, InputIterator last) {
 				while (first != last) {
-					map_node *node = ft_root->insert(first);
+					//map_node *node = ft_root->insert(first);
 					first++;
 				}
 			}
+
+			void erase (iterator position){
+				(void)position;
+			}
+
+			size_type erase (const key_type& k){
+				(void)k;
+				return 1;
+			}
+
+			void erase (iterator first, iterator last){
+				(void)first;
+				(void)last;
+			}
+
+			void swap (map& x){
+				(void)x;
+			}
+
+			void clear() {
+
+			}
+
+			/* *** OBSERVERS *** */
+			key_compare key_comp() const
+			{
+				return (ft_compare);
+			}
+
+			value_compare value_comp() const
+			{
+				return (value_compare(ft_compare));
+			}
+
 
 			/* *** OPERATORS *** */
 
 			//find
 			iterator			find (const key_type& k) {
-				map_node *node = ft_root;
+			/*	map_node *node = ft_root;
 
 				while (node && node != ft_root->maximum(ft_root->_node)) {
 					if (ft_compare(node->value.first, k))
@@ -144,11 +207,13 @@ template < class Key,                                               // map::key_
 					node = node->left;
 				}
 
-				return iterator(ft_root->maximum(ft_root->_node));
+				return iterator(*ft_root->maximum(ft_root->_node));*/
+				(void)k;
+				return iterator(*ft_end);
 			}
 
 			const_iterator		find(const key_type &k) const {
-				map_node *node = ft_root;
+				/*map_node *node = ft_root;
 
 				while (node && node != ft_root->maximum(ft_root->_node)) {
 					if (ft_compare(node->value.first, k))
@@ -156,8 +221,54 @@ template < class Key,                                               // map::key_
 					node = node->left;
 				}
 
-				return iterator(ft_root->maximum(ft_root->_node));
+				return iterator(ft_root->maximum(ft_root->_node));*/
+				(void)k;
+				return const_iterator(*ft_end);
 			}
+
+			size_type count (const key_type& k) const
+			{
+				if (find(k) == end())
+					return (0);
+				return (1);
+			}
+
+			iterator lower_bound (const key_type& k)
+			{
+				(void)k;
+				return iterator(*ft_begin);
+			}
+
+			const_iterator lower_bound (const key_type& k) const
+			{
+				(void)k;
+				return const_iterator(*ft_begin);
+			}
+
+			iterator upper_bound (const key_type& k)
+			{
+				(void)k;
+				return iterator(*ft_end);
+			}
+
+			const_iterator upper_bound (const key_type& k) const
+			{
+				(void)k;
+				return const_iterator(*ft_end);
+			}
+
+			pair<iterator,iterator> equal_range (const key_type& k)
+			{
+				(void)k;
+				return (ft::make_pair(iterator(*ft_end), iterator(*ft_end)));
+			}
+
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+			{
+				(void)k;
+				return (ft::make_pair(const_iterator(*ft_end), const_iterator(*ft_end)));
+			}
+
 
 			/* *** ITERATORS *** */
 
@@ -177,6 +288,22 @@ template < class Key,                                               // map::key_
 
 			const_iterator 	end() const { 
 				return const_iterator(*ft_end); 
+			}
+
+			reverse_iterator rbegin(){
+				return reverse_iterator(*ft_end);
+			}
+			
+			const_reverse_iterator rbegin() const {
+				return const_reverse_iterator(*ft_end);
+			}
+
+			reverse_iterator rend() {
+				return reverse_iterator(*ft_begin);
+			}
+			 
+			const_reverse_iterator rend() const {
+				return const_reverse_iterator(*ft_begin);
 			}
 
 			/* *** CAPACITY *** */
