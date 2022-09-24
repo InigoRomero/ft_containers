@@ -1,8 +1,8 @@
 
 #include "../src/map.hpp"
 #include <map>
-#include <utility>      // ft::pair
-#include <iostream>     // ft::cout
+#include <utility>      // std::pair
+#include <iostream>     // std::cout
 /*
 single element (1)
 	iterator insert (iterator position, const value_type& val);
@@ -18,17 +18,18 @@ range (3)
 
 int		main(void)
 {
-	ft::map<int, std::string> first;
-	first.insert(ft::make_pair(42,"lol"));
-	first.insert(ft::make_pair(42,"mdr"));
-	first.insert(ft::make_pair(50,"mdr"));
-	first.insert(ft::make_pair(35,"funny"));
-	first.insert(ft::make_pair(45,"jaaj"));
-	first.insert(ft::make_pair(57,"jaaj"));
+	std::map<int, std::string> first;
+	first.insert(std::make_pair(42,"lol"));
+	first.insert(std::make_pair(42,"mdr"));
+	first.insert(std::make_pair(50,"mdr"));
+	first.insert(std::make_pair(35,"funny"));
+	first.insert(std::make_pair(45,"jaaj"));
+	first.insert(std::make_pair(57,"jaaj"));
 	// with for  ------------------------------------------------------------------------------------
-	ft::map<int, std::string>::iterator ite = first.end();
+	std::map<int, std::string>::iterator ite = first.end();
+	--ite;
 	std::cout << "[END] key = "<< ite->first << " | value = " << ite->second << "  |\n\n";
-	ft::map<int, std::string>::iterator beg = first.begin();
+	std::map<int, std::string>::iterator beg = first.begin();
 	std::cout << "[BEGIN] key = "<< beg->first << " | value = " << ite->second << "  |\n\n";
 	for (; beg != ite; beg++) {
 		std::cout << "key = "<< beg->first << " | value = " << beg->second << "  |\n";
@@ -40,7 +41,7 @@ int		main(void)
 	std::cout << "--------------------------------\n";
 
 	// one by one ------------------------------------------------------------------------------------
-	ft::map<int, std::string>::iterator it = first.begin();
+	std::map<int, std::string>::iterator it = first.begin();
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 
 	it++;
@@ -54,10 +55,10 @@ int		main(void)
 	it++;
 
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
-//	ft::map<int, std::string>::const_iterator it_end = first.begin();
+//	std::map<int, std::string>::const_iterator it_end = first.begin();
 //	std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";
 
-//	ft::map<int, std::string> copy_map(first.begin(), first.end());
+//	std::map<int, std::string> copy_map(first.begin(), first.end());
 	//copy_map.insert(first.begin(), first.end());
 
 
@@ -66,7 +67,7 @@ int		main(void)
 	{
 		std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";
 	}
-  //	ft::map<char,int> second (first.begin(),first.end());
+  //	std::map<char,int> second (first.begin(),first.end());
 */
 	return (0);
 }

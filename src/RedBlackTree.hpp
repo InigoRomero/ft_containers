@@ -137,7 +137,7 @@ namespace ft
           v->parent = u->parent;
         }
 
-        void deleteBSTNodeHelper(BSTNodePtr node, int key) {
+        void deleteBSTNodeHelper(BSTNodePtr node, value_type key) {
           BSTNodePtr z = TNULL;
           BSTNodePtr x, y;
           while (node != TNULL) {

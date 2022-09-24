@@ -56,12 +56,12 @@ namespace ft
 
 			bool operator==(const bidirectionnal_iterator &x)
 			{
-				return (_current._node == x._current._node);
+				return (_current._node->value.first == x._current._node->value.first);
 			}
 	
 			bool operator!=(const bidirectionnal_iterator &x)
 			{
-				return (_current._node != x._current._node);
+				return (_current._node->value.first != x._current._node->value.first);
 			}
 
 			reference operator*() const

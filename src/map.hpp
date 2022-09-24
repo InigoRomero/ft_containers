@@ -118,6 +118,7 @@ template < class Key,                                               // map::key_
 				// end
 				ft_end = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_end, map_node());
+				ft_end->_node = ft_root->maximum(ft_root->_node);
 			}
 
 			~map()
@@ -144,10 +145,8 @@ template < class Key,                                               // map::key_
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				ft_root->insert(val);
-				ft_end->_node = ft_root->maximum(ft_root->_node);
-				//std::cout << "--------------------------------------\n";
-				//ft_root->printTree();
-				//std::cout << "--------------------------------------\n";
+				ft_end->insert(val);
+				//ft_end->_node = ft_root->maximum(ft_root->_node)->right;
 				ft_size++;
 				return (ft::make_pair(iterator(*ft_end), true));
 			}
@@ -156,9 +155,7 @@ template < class Key,                                               // map::key_
 			iterator			insert (iterator position, const value_type& val) {
 				(void)position;
 				ft_root->insert(val);
-				//std::cout << "--------------------------------------\n";
-				//ft_root->printTree();
-				//std::cout << "--------------------------------------\n";
+				ft_end->_node = ft_root->maximum(ft_root->_node);
 				ft_size++;
 				return iterator(*ft_end);
 			}
@@ -287,7 +284,8 @@ template < class Key,                                               // map::key_
 			}
 
 			iterator 		end() {
-				return iterator(*ft_end);
+				ft_end->_node = ft_end->maximum(ft_end->_node);
+				return iterator(*ft_end); 
 			}
 
 			const_iterator	begin() const { 
