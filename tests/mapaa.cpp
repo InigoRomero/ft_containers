@@ -25,7 +25,6 @@ int		main(void)
 	first.insert(ft::make_pair(35,"funny"));
 	first.insert(ft::make_pair(45,"jaaj"));
 	first.insert(ft::make_pair(57,"jaaj"));
-
 	// with for  ------------------------------------------------------------------------------------
 	ft::map<int, std::string>::iterator ite = first.end();
 	std::cout << "[END] key = "<< ite->first << " | value = " << ite->second << "  |\n\n";
@@ -34,6 +33,7 @@ int		main(void)
 	for (; beg != ite; beg++) {
 		std::cout << "key = "<< beg->first << " | value = " << beg->second << "  |\n";
 	}
+	first[3] = "an element";
 	std::cout << "--------------------------------\n";
 	std::cout << "--------------------------------\n";
 	std::cout << "--------------------------------\n";

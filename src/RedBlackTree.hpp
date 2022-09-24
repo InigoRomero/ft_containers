@@ -374,7 +374,7 @@ namespace ft
                 u->color = 0;
                 k->parent->color = 0;
                 k->parent->parent->color = 1;
-                std::cout << "Value of k->parent: " << k->parent->value.second << "second parent: " << k->parent->parent->value.second   << "| I am not rotating 2 \n";
+                //std::cout << "Value of k->parent: " << k->parent->value.second << "second parent: " << k->parent->parent->value.second   << "| I am not rotating 2 \n";
                 k = k->parent->parent;
               } else {
                 if (k == k->parent->right) {
