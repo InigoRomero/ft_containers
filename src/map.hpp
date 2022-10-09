@@ -97,7 +97,6 @@ template < class Key,                                               // map::key_
 				// end
 				ft_end = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_end, map_node());
-				//ft_root->initializeNULLBSTNode(ft_root->_node);
             }
 
 			//range
@@ -174,21 +173,28 @@ template < class Key,                                               // map::key_
 			}
 
 			size_type erase (const key_type& k){
-				(void)k;
-				return 1;
+				iterator tmp = find(k);
+				ft_root->deleteBSTNode(ft::make_pair(k->first, k->second));
+				ft_end->deleteBSTNode(ft::make_pair(k->first, k->second));
+				return this->size();
 			}
 
 			void erase (iterator first, iterator last){
-				(void)first;
-				(void)last;
+				for (iterator it = first; it != last; it++) {
+					ft_root->deleteBSTNode(ft::make_pair(it->first, it->second));
+					ft_end->deleteBSTNode(ft::make_pair(it->first, it->second));
+				}
 			}
 
 			void swap (map& x){
+			/*	map copy  =  map(x.begin(), x.end());
+				x = ft_root;
+				ft_root = x;*/
 				(void)x;
 			}
 
 			void clear() {
-
+				this->erase(this->begin(), this->end());
 			}
 
 			/* *** OBSERVERS *** */
@@ -294,6 +300,7 @@ template < class Key,                                               // map::key_
 			}
 
 			const_iterator 	end() const {
+				//ft_end->_node = ft_end->maximum(ft_end->_node);
 				return const_iterator(*ft_end); 
 			}
 

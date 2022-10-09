@@ -315,7 +315,7 @@ namespace ft
         // Inserting a node
         BSTNodePtr insert(const value_type& val) {
           BSTNodePtr node = new BSTNode<value_type>(val);
-          node->parent = TNULL;
+          node->parent = new BSTNode<value_type>();
           node->left = TNULL;
           node->right = TNULL;
           node->color = 1;

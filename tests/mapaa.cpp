@@ -18,30 +18,27 @@ range (3)
 
 int		main(void)
 {
-	std::map<int, std::string> first;
-	first.insert(std::make_pair(42,"lol"));
-	first.insert(std::make_pair(42,"mdr"));
-	first.insert(std::make_pair(50,"mdr"));
-	first.insert(std::make_pair(35,"funny"));
-	first.insert(std::make_pair(45,"jaaj"));
-	first.insert(std::make_pair(57,"jaaj"));
+	ft::map<int, std::string> first;
+	first.insert(ft::make_pair(42,"lol"));
+	first.insert(ft::make_pair(42,"mdr"));
+	first.insert(ft::make_pair(50,"mdr"));
+	first.insert(ft::make_pair(35,"funny"));
+	first.insert(ft::make_pair(45,"jaaj"));
+	first.insert(ft::make_pair(57,"jaaj"));
 	// with for  ------------------------------------------------------------------------------------
-	std::map<int, std::string>::iterator ite = first.end();
-	--ite;
+	ft::map<int, std::string>::iterator ite = first.end();
 	std::cout << "[END] key = "<< ite->first << " | value = " << ite->second << "  |\n\n";
-	std::map<int, std::string>::iterator beg = first.begin();
+	ft::map<int, std::string>::iterator beg = first.begin();
 	std::cout << "[BEGIN] key = "<< beg->first << " | value = " << ite->second << "  |\n\n";
 	for (; beg != ite; beg++) {
 		std::cout << "key = "<< beg->first << " | value = " << beg->second << "  |\n";
 	}
-	first[3] = "an element";
-	std::cout << "--------------------------------\n";
-	std::cout << "--------------------------------\n";
+	//first[3] = "an element";
 	std::cout << "--------------------------------\n";
 	std::cout << "--------------------------------\n";
 
 	// one by one ------------------------------------------------------------------------------------
-	std::map<int, std::string>::iterator it = first.begin();
+	ft::map<int, std::string>::iterator it = first.begin();
 	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
 
 	it++;
@@ -60,14 +57,5 @@ int		main(void)
 
 //	std::map<int, std::string> copy_map(first.begin(), first.end());
 	//copy_map.insert(first.begin(), first.end());
-
-
-/*	for(
-    it_end != first.end(); it_end++)
-	{
-		std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";
-	}
-  //	std::map<char,int> second (first.begin(),first.end());
-*/
 	return (0);
 }
