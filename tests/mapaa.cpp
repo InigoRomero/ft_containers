@@ -31,7 +31,7 @@ int		main(void)
 	ft::map<int, std::string>::iterator beg = first.begin();
 	std::cout << "[BEGIN] key = "<< beg->first << " | value = " << ite->second << "  |\n\n";
 	for (; beg != ite; beg++) {
-		std::cout << "key = "<< beg->first << " | value = " << beg->second << "  |\n";
+		std::cout << "key FOR = "<< beg->first << " | value = " << beg->second << "  |\n";
 	}
 	//first[3] = "an element";
 	std::cout << "--------------------------------\n";
@@ -39,19 +39,19 @@ int		main(void)
 
 	// one by one ------------------------------------------------------------------------------------
 	ft::map<int, std::string>::iterator it = first.begin();
-	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	std::cout << "key O  = "<< it->first << " | value = " << it->second << "  |\n";
 
 	it++;
-	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	std::cout << "key 1 = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
-	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	std::cout << "key 2 = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
-	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	std::cout << "key 3 = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
-	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	std::cout << "key 4 = "<< it->first << " | value = " << it->second << "  |\n";
 	it++;
 
-	std::cout << "key = "<< it->first << " | value = " << it->second << "  |\n";
+	std::cout << "key 5 = "<< it->first << " | value = " << it->second << "  |\n";
 //	std::map<int, std::string>::const_iterator it_end = first.begin();
 //	std::cout << "key2 = "<< it_end->first << " | value = " << it_end->second << "  |\n";
 

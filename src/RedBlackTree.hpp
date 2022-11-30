@@ -254,10 +254,13 @@ namespace ft
             return minimum(x->right);
           }
 
+
           BSTNodePtr y = x->parent;
           while (y != TNULL && x->value.first == y->right->value.first) {
             x = y;
             y = y->parent;
+            std::cout << y->right->value.first;
+          std::cout << "YES!\n";
           }
           return y;
         }
@@ -315,11 +318,10 @@ namespace ft
         // Inserting a node
         BSTNodePtr insert(const value_type& val) {
           BSTNodePtr node = new BSTNode<value_type>(val);
-          node->parent = new BSTNode<value_type>();
+          node->parent = TNULL;
           node->left = TNULL;
           node->right = TNULL;
           node->color = 1;
-
           BSTNodePtr y = NULL;
           BSTNodePtr x = this->_node;
           while (x != TNULL) {
@@ -329,6 +331,7 @@ namespace ft
             } else {
               x = x->right;
             }
+
           }
           node->parent = y;
           if (y == NULL) {
@@ -390,7 +393,6 @@ namespace ft
             	break;
             }
           }
-
           _node->color = 0;
 
           return (k);

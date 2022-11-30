@@ -91,12 +91,15 @@ template < class Key,                                               // map::key_
 				// root
 				ft_root = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_root, map_node());
+				ft_root->initializeNULLBSTNode(ft_root->_node);
 				//begin
 				ft_begin = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_begin, map_node());
 				// end
 				ft_end = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_end, map_node());
+				ft_end->initializeNULLBSTNode(ft_end->_node);
+				ft_root->_node->parent = ft_end->_node;
             }
 
 			//range
@@ -144,7 +147,9 @@ template < class Key,                                               // map::key_
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				ft_root->insert(val);
-				ft_end->insert(val);
+ 				//ft_root->_node = ft_root->minimum(ft_root->_node);
+				//ft_root->maximum(ft_root->_node)->right = ft_end->_node;
+				//ft_end->insert(val);
 				//ft_end->_node = ft_root->maximum(ft_root->_node)->right;
 				ft_size++;
 				return (ft::make_pair(iterator(*ft_end), true));
@@ -290,12 +295,12 @@ template < class Key,                                               // map::key_
 			}
 
 			iterator 		end() {
-				ft_end->_node = ft_end->maximum(ft_end->_node);
+				//ft_end->_node = ft_end->maximum(ft_end->_node);
 				return iterator(*ft_end); 
 			}
 
 			const_iterator	begin() const { 
-				ft_root->_node = ft_root->minimum(ft_root->_node);
+			//	ft_root->_node = ft_root->minimum(ft_root->_node);
 				return const_iterator(*ft_root); 
 			}
 
