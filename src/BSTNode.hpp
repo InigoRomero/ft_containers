@@ -14,25 +14,13 @@ namespace ft
 		Pair value;
 		int color;
 
-		BSTNode(): parent(NULL), left(NULL), right(NULL), value(), color(0)
-		{
+		BSTNode(): parent(NULL), left(NULL), right(NULL), value(Pair()), color(0) {}
 
-		}
+		BSTNode(const Pair &data): parent(NULL), left(NULL), right(NULL), value(data), color(0) {}
 
-		BSTNode(const Pair &data): parent(NULL), left(NULL), right(NULL), value(data), color(0)
-		{
+		BSTNode(const BSTNode &x): parent(x.parent), left(x.left), right(x.right), value(x.value), color(x.color) {}
 
-		}
-
-		BSTNode(const BSTNode &x): parent(x.parent), left(x.left), right(x.right), value(x.value), color(x.color)
-		{
-
-		}
-
-		~BSTNode()
-		{
-
-		}
+		~BSTNode() {}
 
 		BSTNode& operator=(const BSTNode& x)
 		{

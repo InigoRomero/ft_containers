@@ -54,12 +54,16 @@ namespace ft
           }
         }
 
-        BSTNodePtr searchTreeHelper(BSTNodePtr node, int key) {
-          if (node == TNULL || key == _node->value) {
+        BSTNodePtr searchTreeHelper(BSTNodePtr node, const value_type& key) {
+          BSTNodePtr node_key = new BSTNode<value_type>(key);
+
+          if (node_key->value.first == _node->value.first) {
+            return NULL;
+          }
+          if (node == TNULL) {
             return node;
           }
-
-          if (key < _node->value) {
+          if (node_key->value < _node->value) {
             return searchTreeHelper(node->left, key);
           }
           return searchTreeHelper(node->right, key);
@@ -233,7 +237,7 @@ namespace ft
           postOrderHelper(this->_node);
         }
 
-        BSTNodePtr searchTree(int k) {
+        BSTNodePtr searchTree(value_type k) {
           return searchTreeHelper(this->_node, k);
         }
 
@@ -254,14 +258,13 @@ namespace ft
             return minimum(x->right);
           }
 
-
           BSTNodePtr y = x->parent;
-          while (y != TNULL && x->value.first == y->right->value.first) {
+          while (y != NULL && x == y->right) {
             x = y;
             y = y->parent;
-            std::cout << y->right->value.first;
-          std::cout << "YES!\n";
           }
+          if (y == NULL)
+            return TNULL;
           return y;
         }
 
@@ -331,7 +334,6 @@ namespace ft
             } else {
               x = x->right;
             }
-
           }
           node->parent = y;
           if (y == NULL) {
@@ -377,7 +379,6 @@ namespace ft
                 u->color = 0;
                 k->parent->color = 0;
                 k->parent->parent->color = 1;
-                //std::cout << "Value of k->parent: " << k->parent->value.second << "second parent: " << k->parent->parent->value.second   << "| I am not rotating 2 \n";
                 k = k->parent->parent;
               } else {
                 if (k == k->parent->right) {

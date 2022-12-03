@@ -35,7 +35,7 @@ template < class Key,                                               // map::key_
 			typedef typename allocator_type::const_reference 								const_reference;
 			typedef typename allocator_type::pointer 										pointer;
 			typedef typename allocator_type::const_pointer 									const_pointer;
-			typedef	ft::RedBlackTree<value_type>							map_node;
+			typedef	ft::RedBlackTree<value_type>											map_node;
 			typedef ft::bidirectionnal_iterator<map_node, value_type>						iterator;
 			typedef ft::const_bidirectionnal_iterator<map_node, const value_type, iterator>	const_iterator;
 			typedef ft::ReverseIterator<iterator> 											reverse_iterator;
@@ -99,7 +99,7 @@ template < class Key,                                               // map::key_
 				ft_end = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_end, map_node());
 				ft_end->initializeNULLBSTNode(ft_end->_node);
-				ft_root->_node->parent = ft_end->_node;
+				ft_begin->_node->parent = ft_end->_node;
             }
 
 			//range
@@ -120,7 +120,8 @@ template < class Key,                                               // map::key_
 				// end
 				ft_end = ft_allocator.allocate(300);
 				ft_allocator.construct(ft_end, map_node());
-				ft_end->_node = ft_root->maximum(ft_root->_node);
+				ft_end->initializeNULLBSTNode(ft_end->_node);
+				ft_begin->_node->parent = ft_end->_node;
 			}
 
 			~map()
@@ -146,21 +147,22 @@ template < class Key,                                               // map::key_
 			
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
+				if (ft_root->searchTreeHelper(ft_root->_node, val) == NULL) {
+					return (ft::make_pair(iterator(*ft_root), true));
+				}
 				ft_root->insert(val);
- 				//ft_root->_node = ft_root->minimum(ft_root->_node);
-				//ft_root->maximum(ft_root->_node)->right = ft_end->_node;
-				//ft_end->insert(val);
-				//ft_end->_node = ft_root->maximum(ft_root->_node)->right;
-				ft_size++;
-				return (ft::make_pair(iterator(*ft_end), true));
+				ft_begin->insert(val);
+				return (ft::make_pair(iterator(*ft_root), true));
 			}
 
 			//with hint
 			iterator			insert (iterator position, const value_type& val) {
 				(void)position;
 				ft_root->insert(val);
+				ft_begin->insert(val);
 				ft_end->_node = ft_root->maximum(ft_root->_node);
 				ft_size++;
+				ft_begin->_node->parent = ft_end->_node;
 				return iterator(*ft_end);
 			}
 
@@ -290,8 +292,8 @@ template < class Key,                                               // map::key_
 			/* *** ITERATORS *** */
 
 			iterator		begin() { 
-				ft_root->_node = ft_root->minimum(ft_root->_node);
-				return iterator(*ft_root); 
+				ft_begin->_node = ft_begin->minimum(ft_begin->_node);
+				return iterator(*ft_begin); 
 			}
 
 			iterator 		end() {
