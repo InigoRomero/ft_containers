@@ -157,7 +157,7 @@ namespace ft
 
 		bool operator!=(const const_bidirectionnal_iterator &x) const
 		{
-			return (_current._node != x._current._node);
+			return (_current._node->value.first != x._current._node->value.first);
 		}
 
 		reference operator*() const
@@ -178,9 +178,9 @@ namespace ft
 
 		const_bidirectionnal_iterator operator++(int)
 		{
+			const_bidirectionnal_iterator tmp(*this);
 			_current._node = _current.successor(_current._node);
-			//return next();
-			return (*this);
+			return (tmp);
 		}
 
 	/*	const_bidirectionnal_iterator next(void)

@@ -150,7 +150,6 @@ template < class Key,                                               // map::key_
 				if (ft_root->searchTreeHelper(ft_root->_node, val) == NULL) {
 					return (ft::make_pair(iterator(*ft_root), true));
 				}
-				ft_root->insert(val);
 				ft_begin->insert(val);
 				return (ft::make_pair(iterator(*ft_root), true));
 			}
@@ -158,12 +157,9 @@ template < class Key,                                               // map::key_
 			//with hint
 			iterator			insert (iterator position, const value_type& val) {
 				(void)position;
-				ft_root->insert(val);
 				ft_begin->insert(val);
-				ft_end->_node = ft_root->maximum(ft_root->_node);
 				ft_size++;
-				ft_begin->_node->parent = ft_end->_node;
-				return iterator(*ft_end);
+				return iterator(*ft_begin);
 			}
 
 			//range
@@ -240,8 +236,6 @@ template < class Key,                                               // map::key_
 					node->_node = node->_node->left;
 				}
 
-				//return iterator(*ft_root->maximum(ft_root->_node));
-				//(void)k;
 				return const_iterator(*node);
 			}
 
@@ -292,7 +286,8 @@ template < class Key,                                               // map::key_
 			/* *** ITERATORS *** */
 
 			iterator		begin() { 
-				ft_begin->_node = ft_begin->minimum(ft_begin->_node);
+				if (ft_size)
+					ft_begin->_node = ft_begin->minimum(ft_begin->_node);
 				return iterator(*ft_begin); 
 			}
 
@@ -301,9 +296,10 @@ template < class Key,                                               // map::key_
 				return iterator(*ft_end); 
 			}
 
-			const_iterator	begin() const { 
-			//	ft_root->_node = ft_root->minimum(ft_root->_node);
-				return const_iterator(*ft_root); 
+			const_iterator	begin() const {
+				if (ft_size) 
+					ft_begin->_node = ft_begin->minimum(ft_begin->_node);
+				return const_iterator(*ft_begin); 
 			}
 
 			const_iterator 	end() const {
