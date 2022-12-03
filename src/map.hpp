@@ -144,7 +144,7 @@ template < class Key,                                               // map::key_
 				return (*(this->insert(value_type(k, mapped_type())).first)).second;
 			}
 			/* *** MODIFIERS *** */
-			
+			// TO DO: Return last value inserted
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				if (ft_root->searchTreeHelper(ft_root->_node, val) == NULL) {
