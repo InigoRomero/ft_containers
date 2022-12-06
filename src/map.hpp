@@ -224,19 +224,19 @@ template < class Key,                                               // map::key_
 						return it;
 				}
 
-				return it;
+				return ite;
 			}
 
 			const_iterator		find(const key_type &k) const {
-				map_node *node = ft_root;
+				const_iterator it = this->begin();
+				const_iterator ite = this->end();
 
-				while (node) {
-					if (ft_compare(node->_node->value.first, k))
-						return iterator(*node);
-					node->_node = node->_node->left;
+				for (; it != ite; it++) {
+					if (it->first == k)
+						return it;
 				}
 
-				return const_iterator(*node);
+				return ite;
 			}
 
 			size_type count (const key_type& k) const
