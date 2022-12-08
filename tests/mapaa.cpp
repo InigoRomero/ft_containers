@@ -19,14 +19,23 @@ range (3)
 int		main(void)
 {
 	ft::map<int, std::string> first;
-	first.insert(ft::make_pair(42,"lol"));
+	first[42] = "LOA";
+	first[432] = "LOdsaL";
+	first[32] = "LsdsOLdd";
+	first[2] = "LOdsdL";
+	first[34] = "LObbL";
+	first[54] = "LOsdfdsL";
+	first[76] = "LOkhjhjL";
+	first[546] = "LOgerreL";
+	first[97] = "LOLdfgfd";
+/*	first.insert(ft::make_pair(42,"lol"));
 	first.insert(ft::make_pair(42,"mdr"));
 	first.insert(ft::make_pair(50,"mdr"));
 	first.insert(ft::make_pair(35,"funny"));
 	first.insert(ft::make_pair(45,"jaaj"));
 	first.insert(ft::make_pair(57,"jaaj"));
 	first.insert(ft::make_pair(54,"jaaj"));
-	first.insert(ft::make_pair(52,"jaaj"));
+	first.insert(ft::make_pair(52,"jaaj"));*/
 	// with for  ------------------------------------------------------------------------------------
 	ft::map<int, std::string>::iterator ite = first.end();
 //	std::cout << "[END] key = "<< ite->first << " | value = " << ite->second << "  |\n\n";

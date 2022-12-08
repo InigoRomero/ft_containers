@@ -123,7 +123,7 @@ template < class Key,                                               // map::key_
 				ft_end->initializeNULLBSTNode(ft_end->_node);
 				ft_begin->_node->parent = ft_end->_node;
 			}
-
+			// 1. TO DO: Destructor
 			~map()
 			{
 			}
@@ -138,13 +138,15 @@ template < class Key,                                               // map::key_
 				return (*this);
 			}
 			/* *** ELEMENT ACCESS *** */
-
+			// 2. TO DO: IT is not inserting the value only the key, 
+			// I guess that this is not the place, but is the fisrt step to x[1] = 3;
 			mapped_type& operator[](const key_type& k)
 			{
 				return (*(this->insert(value_type(k, mapped_type())).first)).second;
 			}
 			/* *** MODIFIERS *** */
-			// TO DO: Return last value inserted
+			// 3.1 TO DO: Return last value inserted
+			// 3.2 TO DO: Why inserting with [] is skipping numbers ?
 			//single
 			pair<iterator,bool> insert (const value_type& val) {
 				if (ft_root->searchTreeHelper(ft_root->_node, val) == NULL) {
@@ -168,9 +170,9 @@ template < class Key,                                               // map::key_
 				for (InputIterator it = first; it != last; it++)
 					ft_size++;
 				for (InputIterator it = first; it != last; it++) 
-					ft_root->insert(ft::make_pair(it->first, it->second));
+					ft_begin->insert(ft::make_pair(it->first, it->second));
 			}
-
+			//4. TO DO: Erase for position
 			void erase (iterator position){
 				(void)position;
 			}
@@ -188,7 +190,7 @@ template < class Key,                                               // map::key_
 					ft_end->deleteBSTNode(ft::make_pair(it->first, it->second));
 				}
 			}
-
+			// 5. TO DO: SWAP
 			void swap (map& x){
 			/*	map copy  =  map(x.begin(), x.end());
 				x = ft_root;
@@ -245,7 +247,7 @@ template < class Key,                                               // map::key_
 					return (0);
 				return (1);
 			}
-
+			// 6. TO DO: Bounds
 			iterator lower_bound (const key_type& k)
 			{
 				(void)k;
@@ -292,7 +294,6 @@ template < class Key,                                               // map::key_
 			}
 
 			iterator 		end() {
-				//ft_end->_node = ft_end->maximum(ft_end->_node);
 				return iterator(*ft_end); 
 			}
 
@@ -303,7 +304,6 @@ template < class Key,                                               // map::key_
 			}
 
 			const_iterator 	end() const {
-				//ft_end->_node = ft_end->maximum(ft_end->_node);
 				return const_iterator(*ft_end); 
 			}
 
